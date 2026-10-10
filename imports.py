@@ -88,5 +88,5 @@ def parse_import(payload: bytes, file_format: str, now=None) -> ImportBatch:
 
 def csv_template():
     out = io.StringIO()
-    csv.writer(out, delimiter=";").writerow(CSV_COLUMNS)
+    csv.writer(out, delimiter=";", lineterminator="\n").writerow(CSV_COLUMNS)
     return out.getvalue().encode("utf-8-sig")
