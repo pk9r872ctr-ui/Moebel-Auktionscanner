@@ -3,3 +3,7 @@ base = "light"
 primaryColor = "#176B50"
 [server]
 headless = true
+address = "127.0.0.1"
+maxUploadSize = 2
+[browser]
+gatherUsageStats = false

@@ -1,24 +1,83 @@
-# Möbel-Auktionsscanner · Planungs-MVP
+# Möbel-Auktionsscanner · interner Import-Scanner
 
-Streamlit-Dashboard mit fiktiven Möbel-Losen und manueller Kalkulation. Auf dem
-Cloud-Server läuft Python; am iPhone genügt Safari. Keine Live-Quelle, kein
-Scraping, keine Gebotsabgabe. Es wurde kein Hosting aktiviert oder veröffentlicht.
+Mobile Streamlit-App, steuerbewusste Szenariokalkulation und automatischer
+Datei-Scanner. **Kein freigegebener Live-Abruf**: Quellenrechte/Zugang sind noch
+nicht nachgewiesen. Dafür ist ein getesteter Import echter, rechtmäßig vom
+Nutzer bereitgestellter JSON-/CSV-Daten implementiert. Demo bleibt getrennt.
+Keine Gebotsabgabe, kein Kauf, keine ERP-Änderung, kein Deployment.
 
-## Start und Tests
+## Erreicht und offen
 
-Python 3.12 wird in CI getestet.
+| Erreicht | Noch nicht erreicht |
+|---|---|
+| JSON/CSV-Validierung, Herkunft pro Finanzfeld, stabile Quellen-/Los-IDs | Live-Connector mit geprüfter Datennutzung |
+| Dubletten, atomare SQLite-Imports, Wiederanlauf, automatischer Datei-Watch | Dauerhafter Cloud-Worker und Backup-/Betriebskonzept |
+| Dashboard-Upload und Anzeige des Scanner-Speichers | Anbieter-Exports ohne manuelle Vertragsabbildung |
+| Sperre bei fehlenden Daten, alten/abgelaufenen Angeboten oder Steuerfragen | Autonome Kaufempfehlung, Marktpreisvalidierung |
+| Private OIDC-Sperre und Allowlist, PWA-Artefakte vorbereitet | Konfigurierter Identity-Provider, vollständige PWA-Installation |
+
+* [Quellenvergleich und Primärbelege](docs/SOURCES.md)
+* [Importvertrag, CSV und automatischer Datei-Scanner](docs/IMPORT.md)
+* [Architektur, zukünftige API, ERP-Grenze und private PWA](docs/ARCHITECTURE.md)
+* [Aktuelle Tests und Risiken](docs/VALIDATION-02.md)
+* [Leere CSV-Vorlage](examples/import-template.csv)
+
+## Entwicklung und Tests
+
+Python 3.12:
 
 ```sh
 python -m venv .venv
 . .venv/bin/activate
 pip install -r requirements-dev.txt
 python -m pytest -q
-streamlit run app.py
+# Nur im privaten Entwicklungsraum; nicht öffentlich hosten:
+SCANNER_ACCESS_MODE=local streamlit run app.py
 ```
 
-Für Hosting genügt `requirements.txt`. Die Abhängigkeiten sind auf Hauptversionen
-begrenzt, aber kein reproduzierbarer Lockfile; Updates erneut testen. Unbenutzte
-Direktabhängigkeiten pandas, requests und BeautifulSoup wurden entfernt.
+Standardzugriff ist `private`: Ohne OIDC-Secrets und freigegebene Identität
+stoppt die App. Es werden keine Passwörter in Git gespeichert.
+`requirements.txt` enthält Streamlit mit Auth-Unterstützung. Versionsbereiche
+sind kein Lockfile; Updates erneut testen. Finanzmodell aus PR #1 erhalten.
+
+## Ausschließlich mit dem iPhone weiterarbeiten
+
+1. In Safari den neuen Pull Request und „Files changed“ prüfen. Besonders
+   `docs/SOURCES.md` und `docs/IMPORT.md` lesen. In „Checks“ Testresultate ansehen.
+   Nicht ohne eigene ausdrückliche Freigabe mergen.
+2. Quellenfreigabe bzw. einen rechtmäßig nutzbaren Export beschaffen. Für
+   Zoll-/Justiz-Inhalte ist eine pauschale gewerbliche Weiterverwendung nicht
+   belegt. Keine geschützten Inhalte einfach massenhaft kopieren. Der Scanner
+   versendet keine Anfragen an Anbieter.
+3. Berechtigten Export in iOS „Dateien“ speichern. Die leere CSV-Vorlage kann
+   über GitHub in Safari heruntergeladen und z. B. in Numbers bearbeitet werden.
+   Originale IDs, Beobachtungszeit, Währung und Belege eintragen; fehlende Zahlen
+   leer und Herkunft `unknown` lassen. Export muss UTF-8 und **Semikolon** als
+   Trenner haben; Format anhand des Importvertrags prüfen. Ein normaler
+   Anbieterexport ist ohne Abbildung nicht automatisch kompatibel.
+4. Keine echten Angebotsdateien, SQLite-Datenbanken oder Secrets ins Repository
+   hochladen. Für Codeänderungen auf GitHub „Edit“ oder Codex nutzen; lokale
+   Shellbefehle sind für einen späteren privaten Server, nicht für das iPhone.
+5. **Derzeit gibt es keinen bereitgestellten App-Link.** Als nächstes nach
+   Quellen-/Exportabnahme den privaten Hosting- und OIDC-Aufbau separat
+   freigeben. Möglich ist eine private Streamlit-Cloud-Instanz mit geprüftem
+   Gratisangebot; Kosten, Zugangsschutz und Persistenz vorab klären. Keine
+   Karte oder kostenpflichtigen Dienste aktivieren. Für den dauerhaften
+   Datei-Scanner genügt eine schlafende Gratis-Dashboard-Instanz nicht.
+6. Sobald später ein freigegebener privater HTTPS-Link existiert: anmelden,
+   „Echte Daten aus Nutzerimport“ wählen, Rechte bestätigen, Datei aus „Dateien“
+   hochladen. Herkunft/Blockaden prüfen. Loskosten und Gebühren im Export
+   korrigieren, erneut hochladen; erst dann Steuer- und Review-Szenario wählen.
+   Importierte Nebenkosten kommen aus dem Los, nicht aus Demo-Vorgaben.
+7. Safari → Teilen → „Zum Home-Bildschirm“ → gegebenenfalls „Als Web-App öffnen“.
+   [Apple-Anleitung](https://support.apple.com/en-eg/guide/iphone/iphea86e5236/ios).
+   Dies startet die private Web-App; es bewirkt keinen Offline- oder
+   Hintergrundscan. Eine vollständige Manifest-Einbindung steht noch aus.
+
+Kein Hosting im Auftrag aktiviert. Für spätere OIDC-Konfiguration und Manifest-
+Einbindung siehe [Architektur](docs/ARCHITECTURE.md) und die
+[offizielle Streamlit-Authentifizierung](https://docs.streamlit.io/develop/concepts/connections/authentication).
+Echte Safari-/OIDC-Abnahme bleibt vor Inbetriebnahme erforderlich.
 
 ## Berechnung und Grenzen
 
@@ -65,63 +124,3 @@ Arbeitszeit, Verkaufskosten, Ertragsteuern und rechtliche Eignung eines
 Steuermodus. Rundung erfolgt nur zur Anzeige; Rechnungssummen können durch
 positionsweise Cent-Rundung abweichen. Vor Verwendung für echte Entscheidungen
 Rechnungen, Auktionsbedingungen und steuerliche Behandlung prüfen lassen.
-
-## iPhone: späteres Cloud-Deployment ohne lokalen PC
-
-Empfohlener Einstieg: [Streamlit Community Cloud](https://streamlit.io/cloud),
-weil die App direkt aus GitHub bereitgestellt werden kann. Der Anbieter bewirbt
-einen kostenlosen Einstieg; aktuelle Konditionen, Ressourcen- und Privatprojekt-
-Limits vor Anmeldung prüfen. Keine Kreditkarte oder kostenpflichtigen Tarif
-aktivieren. Das private Repository nicht zur Umgehung von Limits öffentlich machen.
-
-Die folgenden Schritte **veröffentlichen eine App** und sind eine Anleitung für
-später, keine in diesem Auftrag ausgeführte Aktion:
-
-1. In Safari den Pull Request auf GitHub prüfen. Erst nach eigener Freigabe mergen.
-2. Streamlit Community Cloud öffnen und mit GitHub anmelden. Nur die benötigten
-   Repository-Berechtigungen gewähren. Bei Bedarf in Safari im Seitenmenü
-   „Desktop-Website anfordern“ wählen.
-3. „Create app“ auswählen. Repository `pk9r872ctr-ui/Moebel-Auktionscanner`,
-   Branch `main`, Einstieg `app.py`; Python 3.12 in erweiterten Einstellungen.
-   Keine Secrets nötig. Bei einem Kostenhinweis stoppen.
-4. **Vor „Deploy“ Sichtbarkeit und Zugriff prüfen**: nur den gewünschten privaten
-   Zugriff verwenden. Wenn der Gratis-Tarif das nicht unterstützt, stoppen und
-   eine Hostingentscheidung treffen. Keine echten sensiblen Daten hochladen.
-5. Nach bewusster Veröffentlichungsfreigabe „Deploy“ wählen, Build-Protokoll
-   prüfen und den bereitgestellten HTTPS-Link in Safari öffnen.
-6. Demo-Karten, Steuermodi und manuelle Kalkulation testen. Safari → Teilen →
-   „Zum Home-Bildschirm“ für schnellen Zugriff. Einstellungen bei Bedarf neu
-   eingeben: kein dauerhaftes Speichern, kein Offlinebetrieb.
-
-Offizielle Anleitungen: [Deployment](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app),
-[Zugriff und Teilen](https://docs.streamlit.io/deploy/streamlit-community-cloud/share-your-app).
-Gratis-Apps können schlafen und müssen beim Öffnen starten. Das Dashboard ist
-kein dauerhafter Hintergrundscanner. Für spätere regelmäßige Abrufe sind ein
-separater Worker, Persistenz, Quoten und Kostenlimits zu planen. Keine automatische
-Aktivierung kostenpflichtiger Infrastruktur. Rücknahme: vorherigen geprüften
-Commit wiederherstellen; Hosting-App bei Bedarf im Anbieter-Dashboard löschen.
-
-## Architektur und echte Quellen
-
-* `scoring.py`: reine Berechnung ohne Netzwerk oder Streamlit.
-* `sources.py`: typisierter `Lot` und read-only `AuctionSource`-Protokoll.
-* `sample_data.py`: ausschließlich fiktive Daten und Gebühren; keine behaupteten
-  Bedingungen realer Plattformen. Frühere unbestätigte Plattform-Vorgaben entfernt.
-* `app.py`: mobile Darstellung, Eingaben und getrennte Datenmodi.
-* `tests/`: fachliche Regressionen und Streamlit-Interaktion.
-
-Live-Modus liefert ausdrücklich keine Daten. Ein künftiger Adapter darf nur eine
-nachweislich erlaubte API, einen genehmigten Feed oder lizenzierte Importdaten
-nutzen. Vor Anschluss Nutzungsbedingungen, Zugriff, Rate-Limits und Gebühren
-klären. Für echte Lose `is_demo=False` und Herkunft, Abrufzeit, Original-URL und
-Gebührenbeleg liefern; unbekannte Konditionen dürfen keine Standardwerte erhalten.
-API-Schlüssel nur als Hosting-Secrets, nie in Git. Kein HTML-Scraping eingebaut.
-Der aktuelle MVP hat keine API-Anbindung und keine automatische Preisrecherche.
-
-## Prüfung und verbleibende Risiken
-
-Siehe [VALIDATION.md](VALIDATION.md) für die ausgeführten Prüfungen. CI führt die
-Tests bei Push und Pull Request aus. Keine produktive Veröffentlichung, keine
-Gebote, keine Dienste aktiviert. Nicht mergen, solange fachliche Annahmen für den
-eigenen Steuerfall ungeklärt sind. Das MVP ist für Szenarioplanung vorbereitet;
-Live-Betrieb und rechtliche/steuerliche Freigabe bleiben eigene Arbeitsschritte.
