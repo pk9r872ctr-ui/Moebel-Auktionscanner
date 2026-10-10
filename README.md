@@ -1,4 +1,4 @@
-# Möbel-Auktionsscanner · interner Import-Scanner
+# Möbel-Auktionsscanner · interne Auction Intelligence
 
 Mobile Streamlit-App, steuerbewusste Szenariokalkulation und automatischer
 Datei-Scanner. **Kein freigegebener Live-Abruf**: Quellenrechte/Zugang sind noch
@@ -6,12 +6,27 @@ nicht nachgewiesen. Dafür ist ein getesteter Import echter, rechtmäßig vom
 Nutzer bereitgestellter JSON-/CSV-Daten implementiert. Demo bleibt getrennt.
 Keine Gebotsabgabe, kein Kauf, keine ERP-Änderung, kein Deployment.
 
-## Erreicht und offen
+## Auftrag 03: geprüfter Entwicklungsstand
+
+21 Atlasquellen im versionierten Register, Rechercheadapter mit Originaldaten,
+**182 bestandene Tests**, Beobachtungshistorie, Merkliste, Vollkosten-/Liquiditätsprüfung und versionierter
+Kandidatenexport. **0 echte Angebote verarbeitet**: angekündigte Recherchedatei
+fehlt, kein autorisierter Live-Katalogzugang nachgewiesen. 20 synthetische
+Angebote technisch verarbeitet; kein belegter wirtschaftlicher Vorteil.
+
+* [Vollständiger Entwicklungsbericht und Tests](docs/REPORT-03.md)
+* [21 Quellen und Zugangsprüfung](docs/SOURCE-REGISTER-03.md)
+* [Quellenregister JSON](data/source_registry.json)
+* [Rechercheimport](docs/RESEARCH-IMPORT-03.md) · [Vollkostenmodell](docs/ECONOMICS-03.md)
+* [Speicher, Sicherung und Betrieb](docs/STORAGE-03.md) · [Architektur und ERP-Vertrag](docs/ARCHITECTURE-03.md)
+* [Einfache iPhone-Anleitung](docs/IPHONE-03.md)
+
+## Grundlagen und verbleibende Grenzen
 
 | Erreicht | Noch nicht erreicht |
 |---|---|
 | JSON/CSV-Validierung, Herkunft pro Finanzfeld, stabile Quellen-/Los-IDs | Live-Connector mit geprüfter Datennutzung |
-| Dubletten, atomare SQLite-Imports, Wiederanlauf, automatischer Datei-Watch | Dauerhafter Cloud-Worker und Backup-/Betriebskonzept |
+| Dubletten, atomare SQLite-Imports, Wiederanlauf, automatischer Datei-Watch | Dauerhafter Cloud-Worker und automatischer Backupplan |
 | Dashboard-Upload und Anzeige des Scanner-Speichers | Anbieter-Exports ohne manuelle Vertragsabbildung |
 | Sperre bei fehlenden Daten, alten/abgelaufenen Angeboten oder Steuerfragen | Autonome Kaufempfehlung, Marktpreisvalidierung |
 | Private OIDC-Sperre und Allowlist, PWA-Artefakte vorbereitet | Konfigurierter Identity-Provider, vollständige PWA-Installation |
@@ -81,7 +96,7 @@ Echte Safari-/OIDC-Abnahme bleibt vor Inbetriebnahme erforderlich.
 
 ## Berechnung und Grenzen
 
-Alle Werte in Euro. Eingaben werden nur im Sitzungszustand gehalten.
+Alle Werte in Euro. Kalkulationspläne bleiben im Sitzungszustand; importierte Angebote und Originalprovenienz können bei konfigurierter privater Datenbank ausdrücklich gespeichert werden. Der folgende Abschnitt beschreibt den Basisrechner; zusätzliche Kosten und Liquidität behandelt das verlinkte Vollkostenmodell.
 
 * Zuschlag **netto**, Aufgeld als Prozentsatz des Netto-Zuschlags. Waren-USt. auf
   Zuschlag, Aufgeld-USt. nur auf Netto-Aufgeld. Das sind ausdrücklich gewählte
@@ -119,8 +134,8 @@ Beispiel: Zuschlag 1.000 €, Aufgeld 20 %, beide Einkaufs-USt. 19 %, Nebenkoste
 Verkaufs-USt. 380 €, Erlös 2.000 €, Deckungsbeitrag ohne Vorsteuer 472 €.
 
 Nicht modelliert: abweichende Steuerbasen, Bruttopreis-Zuschläge, Mindest- oder
-Staffelgebühren, gemischte Steuersätze, grenzüberschreitende Fälle, Finanzierung,
-Arbeitszeit, Verkaufskosten, Ertragsteuern und rechtliche Eignung eines
+Staffelgebühren, gemischte Steuersätze, grenzüberschreitende Fälle, automatische Finanzierungsermittlung,
+Arbeitszeitbewertung, Ertragsteuern und rechtliche Eignung eines
 Steuermodus. Rundung erfolgt nur zur Anzeige; Rechnungssummen können durch
 positionsweise Cent-Rundung abweichen. Vor Verwendung für echte Entscheidungen
 Rechnungen, Auktionsbedingungen und steuerliche Behandlung prüfen lassen.

@@ -104,3 +104,10 @@ def test_fixed_vat_ignored_without_entitlement():
 def test_invalid_fee_or_tax(premium, item_vat, premium_vat):
     with pytest.raises(ValueError):
         economics(100, 1000, premium, item_vat, premium_vat, BASE)
+
+
+@pytest.mark.parametrize("flag", ["vat_recoverable", "item_vat_deductible", "premium_vat_deductible"])
+def test_vat_flags_are_strict_booleans(flag):
+    from dataclasses import replace
+    with pytest.raises(ValueError, match="bool"):
+        economics(1000, 2380, .2, .19, .19, replace(Assumptions(sale_tax_mode="regular"), **{flag: "false"}))

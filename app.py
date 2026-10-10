@@ -2,8 +2,14 @@ import streamlit as st
 from scoring import Assumptions, economics
 from sources import load_lots
 from imports import parse_import, csv_template
-from assessment import assess_listing
-from listings import ValidationError
+from contracts import candidate_export
+from registry import load_registry
+from listings import ValidationError, timestamp
+import json
+from datetime import datetime, timezone, timedelta
+from intelligence import analyze_listing, filter_listings, possible_duplicates
+from extended_economics import ExtendedPlan, assess_extended
+from research_import import parse_research_csv
 import hashlib
 import os
 import sqlite3
@@ -43,7 +49,7 @@ def show_result(r):
         st.warning(r["warnings"][0])
         return
     st.write(f"Erlös nach Verkaufs-USt.: {r['safe_resale']:,.2f} €")
-    st.caption(f"Sicherer Bruttoerlös: {r['safe_resale_gross']:,.2f} € · Verkaufs-USt.: {r['output_vat']:,.2f} €")
+    st.caption(f"Konservativ geplanter Bruttoerlös: {r['safe_resale_gross']:,.2f} € · Verkaufs-USt.: {r['output_vat']:,.2f} €")
     st.write(f"**Deckungsbeitrag: {r['contribution']:,.2f} € · Marge: {r['margin']:.1%}**")
     if r["target_feasible"]:
         st.write(f"**Maximaler Netto-Zuschlag: {r['max_bid']:,.2f} €** · Deal-Score: {r['score']}/100")
@@ -62,8 +68,45 @@ FIELD_LABELS = {
 }
 ORIGIN_LABELS = {"observed": "Beobachtet", "estimated": "Geschätzt", "manual": "Manuell eingegeben", "unknown": "Ungeklärt"}
 
-def show_imported_lots(listings, digest):
-    for lot in listings:
+def show_imported_lots(listings, digest, store=None, workspace="internal", provenance=()):
+    original_rows = list(provenance)
+    if store:
+        original_rows.extend(row for entry in store.export_provenance(workspace) for row in entry["provenance"])
+    descriptions = {}
+    for row in original_rows:
+        if isinstance(row, dict) and isinstance(row.get("source_key"), list) and len(row["source_key"]) == 2 and all(isinstance(v, str) for v in row["source_key"]) and isinstance(row.get("description"), str):
+            try:
+                observed = timestamp(row.get("observed_at"), "provenance.observed_at").isoformat()
+                descriptions[(tuple(row["source_key"]), observed)] = row["description"]
+            except ValidationError:
+                continue
+    decisions = {(d["source"], d["source_id"]): d for d in store.decisions(workspace)} if store else {}
+    with st.expander("Angebote suchen und filtern", expanded=True):
+        search = st.text_input("Suche im Titel", key=f"search:{digest}")
+        source = st.selectbox("Plattform", [""] + sorted({lot.source for lot in listings}), key=f"source:{digest}", format_func=lambda v: v or "Alle")
+        category = st.selectbox("Abgeleitete Kategorie", ["", "seating", "tables", "storage", "beds"], key=f"category:{digest}", format_func=lambda v: v or "Alle")
+        location = st.text_input("Standort enthält", key=f"location:{digest}")
+        status = st.selectbox("Angebotsstatus", ["", "active", "ended", "unknown"], key=f"status:{digest}", format_func=lambda v: v or "Alle")
+        quality = st.selectbox("Finanzdaten", ["", "complete", "incomplete"], key=f"quality:{digest}", format_func=lambda v: {"": "Alle", "complete": "Alle Werte vorhanden (nicht automatisch verifiziert)", "incomplete": "Unvollständig"}[v])
+        criteria = dict(search=search, source=source, category=category, location=location, status=status, quality=quality)
+        if st.checkbox("Preisbereich anwenden (unbekannte Preise ausgeschlossen)", key=f"prices:{digest}"):
+            criteria["min_price"] = st.number_input("Preis ab €", min_value=0.0, key=f"min:{digest}")
+            criteria["max_price"] = st.number_input("Preis bis €", min_value=0.0, value=10000.0, key=f"max:{digest}")
+        if st.checkbox("Nur zukünftig endende Angebote", key=f"upcoming:{digest}"):
+            criteria["upcoming"] = True
+        if st.checkbox("Auktionsende innerhalb 7 Tagen", key=f"week:{digest}"):
+            criteria["ends_before"] = (datetime.now(timezone.utc) + timedelta(days=7)).isoformat()
+        decision_filter = st.selectbox("Manuelle Auswahl", ["", "watchlist", "candidate", "rejected", "unreviewed"], key=f"decisionfilter:{digest}", format_func=lambda v: v or "Alle") if store else ""
+    matches = filter_listings(listings, criteria)
+    if decision_filter:
+        matches = [lot for lot in matches if decisions.get(lot.key, {}).get("decision", "unreviewed") == decision_filter]
+    st.caption(f"{len(matches)} von {len(listings)} Angeboten · Preise behalten ihre jeweilige Gebotsart und Basis.")
+    duplicates = possible_duplicates(listings)
+    if duplicates:
+        st.warning(f"{len(duplicates)} mögliche plattformübergreifende Dubletten: nur Prüfhinweise, keine Zusammenführung.")
+        with st.expander("Dublettenhinweise"):
+            st.json(duplicates)
+    for lot in matches:
         with st.container(border=True):
             st.subheader(lot.title)
             st.text(f"NUTZERIMPORT · {lot.source} / {lot.source_id} · {lot.location}")
@@ -84,9 +127,45 @@ def show_imported_lots(listings, digest):
                     st.text(f"{FIELD_LABELS[name]}: {value} · {ORIGIN_LABELS[datum.origin]} · {datum.reference}")
                 st.text(f"Gebührenbeleg: {lot.terms_reference}")
                 st.text(f"Nutzungsrechte: {lot.rights_reference}")
+            matching_description = descriptions.get((lot.key, lot.observed_at), "")
+            analysis = analyze_listing(lot, matching_description)
+            with st.expander("Abgeleitete Möbelmerkmale und Datenqualität"):
+                st.caption("Textregeln liefern Prüfhinweise; Originaldaten werden nicht überschrieben. Modell und nicht ausdrücklich genannte Stückzahlen bleiben unbekannt.")
+                st.json(analysis)
+            if store:
+                current_decision = decisions.get(lot.key, {})
+                if current_decision.get("review_required"):
+                    st.warning("Angebot geändert: vorherige Entscheidung erneut prüfen. Kandidatenexport bis dahin gesperrt.")
+                with st.expander("Merkliste und manuelle Entscheidung"):
+                    options = ["unreviewed", "watchlist", "candidate", "rejected"]
+                    decision = st.selectbox("Entscheidung", options, index=options.index(current_decision.get("decision", "unreviewed")), key=f"decision:{digest}:{lot.key}")
+                    note = st.text_input("Prüfnotiz (keine Buchhaltung)", value=current_decision.get("note", ""), max_chars=2000, key=f"note:{digest}:{lot.key}")
+                    st.caption("Einkaufskandidat bedeutet manuelle Auswahl, keinen Nachweis von Rentabilität und keine Kaufausführung.")
+                    if st.button("Entscheidung für diesen Stand speichern", key=f"save:{digest}:{lot.key}"):
+                        store.set_decision(workspace, lot.source, lot.source_id, decision, note, expected_observed_at=lot.observed_at)
+                        st.success("Entscheidung gespeichert")
+                    st.caption(f"Beobachtungshistorie: {len(store.history(workspace, lot.source, lot.source_id))} Stände")
             reviewed = st.checkbox("Kosten, Gebührenbasis und Verkaufsschätzung für dieses Los geprüft",
                                    key=f"review:{digest}:{lot.source}:{lot.source_id}")
-            assessed = assess_listing(lot, a, review_confirmed=reviewed)
+            plan = None
+            with st.expander("Vollkostenplan für dieses Los"):
+                st.caption("Zusätzliche Bruttokosten neben den importierten Loskosten. Unbekannt bleibt leer; auch 0 muss ausdrücklich eingetragen werden. Keine Plattformgebühren werden aus dem Quellenatlas übernommen.")
+                labels = {
+                    "pickup": "Zusätzliche Abholung €", "dismantling": "Demontage €", "loading": "Verladung €",
+                    "sales_fees": "Verkaufsgebühren brutto €", "fixed_fees": "Zusätzliche feste Kaufgebühren brutto €",
+                    "financing_cost": "Finanzierungs-/Kapitalbindungskosten €", "input_vat_extra": "Bestätigte Vorsteuer in Zusatzkosten €",
+                    "expected_reject_fraction": "Ausschussanteil 0–1", "resale_days": "Geplante Verkaufsdauer Tage",
+                    "resale_low_gross": "Verkaufsspanne gesamt brutto: Untergrenze €", "resale_high_gross": "Verkaufsspanne gesamt brutto: Obergrenze €",
+                    "target_profit": "Zieldeckungsbeitrag €", "available_cash": "Verfügbare Bruttoliquidität €"}
+                values = {name: st.number_input(label, min_value=0.0, value=None, key=f"plan:{digest}:{lot.key}:{name}") for name, label in labels.items()}
+                purchase_mode = st.selectbox("Einkaufssteuer laut Los-/Rechnungsbeleg", ["unknown", "regular", "no_vat_shown", "margin_explicit"], key=f"tax:{digest}:{lot.key}")
+                reference = st.text_input("Planbelege und Schätzmethode", max_chars=2000, key=f"ref:{digest}:{lot.key}")
+                try:
+                    plan = ExtendedPlan(**values, purchase_tax_mode=purchase_mode, origin="manual", reference=reference)
+                except ValueError as error:
+                    st.error(str(error))
+            assessed = assess_extended(lot, a, plan, review_confirmed=reviewed)
+            st.caption(f"Technische Finanzvollständigkeit: {assessed['technical_priority']}/100 · keine wirtschaftliche Bewertung")
             if assessed["status"] == "blocked":
                 st.warning("Keine belastbare Empfehlung: " + "; ".join(assessed["blockers"]))
             else:
@@ -117,19 +196,30 @@ except ValueError as error:
 
 if data_mode == "import":
     st.subheader("Nutzerimport echter Angebote")
-    st.caption("Kein Live-Abruf. Nur rechtmäßig nutzbare Daten hochladen; Herkunft wird dokumentiert, nicht unabhängig verifiziert. Upload bleibt in dieser Sitzung.")
+    st.caption("Kein Live-Abruf. Nur rechtmäßig nutzbare Daten hochladen; Herkunft wird dokumentiert, nicht unabhängig verifiziert. Upload bleibt in dieser Sitzung, außer bei ausdrücklichem Speichern in konfigurierter privater Datenbank.")
     st.download_button("Leere CSV-Vorlage", csv_template(), "auktionen-v1.csv", "text/csv")
     permitted = st.checkbox("Nutzungsrechte für den internen Datenimport geprüft", key="import_rights")
+    import_format = st.selectbox("Importvertrag", ["Standard v1 CSV/JSON", "Recherche-CSV (vorgeschlagener Vertrag)"])
     uploaded = st.file_uploader("CSV (; getrennt) oder JSON · maximal 2 MiB", type=["csv", "json"])
     if uploaded is not None and permitted:
         payload = uploaded.getvalue()
         try:
-            batch = parse_import(payload, uploaded.name.rsplit(".", 1)[-1].lower())
+            if import_format.startswith("Recherche"):
+                batch = parse_research_csv(payload)
+                with st.expander("Unveränderte Recherchefelder und Preisarten"):
+                    st.json(batch.provenance)
+            else:
+                batch = parse_import(payload, uploaded.name.rsplit(".", 1)[-1].lower())
             st.success(f"{len(batch.listings)} Angebote · {batch.duplicates} Dubletten zusammengeführt")
             digest = hashlib.sha256(payload).hexdigest()
-            show_imported_lots(batch.listings, digest)
+            if os.environ.get("SCANNER_DATABASE") and st.button("Geprüften Import dauerhaft speichern", key="persist_upload"):
+                ListingStore(os.environ["SCANNER_DATABASE"]).ingest(batch, os.environ.get("SCANNER_WORKSPACE", "internal"), digest)
+                st.success("Import atomar gespeichert; unten im Scanner-Speicher verfügbar.")
+            show_imported_lots(batch.listings, digest, provenance=getattr(batch, "provenance", ()))
         except ValidationError as error:
             st.error(str(error))
+        except (OSError, sqlite3.Error):
+            st.error("Privater Speicher nicht verfügbar. Import wurde nicht als gespeichert bestätigt.")
     elif uploaded is not None:
         st.warning("Vor dem Import Nutzungsrechte prüfen.")
     database = os.environ.get("SCANNER_DATABASE")
@@ -138,17 +228,29 @@ if data_mode == "import":
         st.button("Scanner-Daten aktualisieren")
         try:
             # Workspace is server configuration, never an untrusted UI parameter.
-            listings = ListingStore(database).list(os.environ.get("SCANNER_WORKSPACE", "internal"))
+            store = ListingStore(database)
+            workspace = os.environ.get("SCANNER_WORKSPACE", "internal")
+            listings = store.list(workspace)
+            with st.expander("Datei-Scannerstatus und private Exporte"):
+                runs = store.scan_status(workspace)
+                if runs:
+                    st.json(runs)
+                else:
+                    st.info("Noch kein protokollierter Scannerlauf. Ein Speicher allein belegt keinen laufenden Worker.")
+                st.download_button("Unveränderte Recherche-Provenienz", json.dumps({"schema_version": 1, "imports": store.export_provenance(workspace)}, ensure_ascii=False), "recherche-provenienz-v1.json", "application/json")
+                st.download_button("Aktuelle Angebotsstände im v1-Importformat", json.dumps({"schema_version": 1, "listings": store.export_listings(workspace)}, ensure_ascii=False), "angebote-v1.json", "application/json")
+                st.download_button("Manuell gewählte aktuelle Einkaufskandidaten", json.dumps(candidate_export(store, workspace), ensure_ascii=False), "kandidaten-v1.json", "application/json")
             if not listings:
                 st.info("Noch keine Angebote im Scanner-Speicher.")
             else:
                 digest = hashlib.sha256(repr([lot.to_dict() for lot in listings]).encode()).hexdigest()
-                show_imported_lots(listings, digest)
+                show_imported_lots(listings, digest, store, workspace)
         except (OSError, sqlite3.Error, ValidationError):
             st.error("Scanner-Speicher nicht verfügbar oder ungültig.")
 
 
-st.subheader("Los manuell bewerten")
+st.subheader("Basisrechnung manuell prüfen")
+st.info("Diese Basisrechnung erfasst nicht alle Vollkosten. Für importierte Einkaufskandidaten den losbezogenen Vollkostenplan verwenden.")
 st.caption("Gebühren und USt. aus den konkreten Auktionsbedingungen übernehmen. Eingaben werden nicht gespeichert.")
 with st.form("manual"):
     bid = st.number_input("Netto-Zuschlag €", min_value=0.0, value=1000.0)
@@ -167,3 +269,7 @@ if submit:
         except ValueError as error:
             st.error(str(error))
 st.caption("Score = heuristische Gewichtung von Marge, ROI, Gebotsspielraum und Deckungsbeitrag; keine Erfolgswahrscheinlichkeit. Deckungsbeitrag vor Arbeit, Ertragsteuern und weiteren nicht erfassten Kosten.")
+
+with st.expander("Beschaffungsatlas und geprüfte Quellenzugänge"):
+    st.caption("21 Quellen; Atlasangaben sind keine losbezogenen Kalkulationsregeln. Kein freigegebener Live-Connector.")
+    st.json(load_registry())

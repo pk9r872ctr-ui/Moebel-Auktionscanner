@@ -1,0 +1,2475 @@
+{
+  "schema_version": 1,
+  "registry_version": "2026-10-10.1",
+  "updated_at": "2026-10-10",
+  "document": {
+    "title": "Beschaffungsatlas Deutschland – Möbel, Nachlässe, Betriebsauflösungen, Behördenverwertung",
+    "date": "2026-09-24",
+    "sha256": "a6200f0475588de3b2b7354e67154046ed20a8794dfd192c897ae60351646ff4",
+    "text_sha256": "33173fbac02aa8852b5c6151a75d343c73cff1bf018a007671d852c9bae2a9b0",
+    "source_count": 21
+  },
+  "change_log": [
+    {
+      "version": "2026-10-10.1",
+      "date": "2026-10-10",
+      "changes": [
+        "21 Atlaszeilen extrahiert; Plattform-/Losregeln getrennt.",
+        "Offizielle Bedingungen recherchiert; Justiz-USt.-Widerspruch und Zugangssperren markiert.",
+        "Keine kommerzielle Live-Erlaubnis behauptet."
+      ]
+    }
+  ],
+  "implementation_order": [
+    "authorized_user_import",
+    "permission_confirmed_export",
+    "permission_confirmed_feed_or_api"
+  ],
+  "permission_research_order": [
+    "troostwijk-dechow",
+    "vebeg",
+    "sebworld",
+    "haemmerle",
+    "restlos",
+    "proventura",
+    "assetorb",
+    "netbid",
+    "baden-auktionen",
+    "bickel",
+    "industriewert",
+    "perlick",
+    "sen-sen",
+    "surplex",
+    "ac1",
+    "ertax",
+    "eder",
+    "henrys",
+    "weidler",
+    "zoll-auktion",
+    "justiz-auktion"
+  ],
+  "sources": [
+    {
+      "id": "zoll-auktion",
+      "name": "Zoll-Auktion",
+      "official_website": "https://www.zoll-auktion.de/",
+      "source_type": "public_authority",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 1,
+        "buyer_premium_claim": "kein klassisches Aufgeld",
+        "vat_claim": "Losabhängig; teils keine USt.-Ausweisung",
+        "access_claim": "grundsätzlich offen",
+        "relevance_claim": "Behörden-/Kommunalbestände, Möbel",
+        "priority_class": "A+",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "kein klassisches Aufgeld",
+          "status": "unconfirmed",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "Losabhängig; teils keine USt.-Ausweisung",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "grundsätzlich offen",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "Suchindex nennt Nutzung nur privat/nicht kommerziell; geöffnete Seite nicht identisch nachvollziehbar. Keine kommerzielle Datenlizenz nachgewiesen."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "permission_required",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "A+",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Behörden-/Kommunalbestände, Möbel",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "kein klassisches Aufgeld",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile1",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.zoll-auktion.de/auktion/info.php?info=imp",
+          "summary": "Impressum Urheberrecht: gewerbliche Inhaltsnutzung erfordert vorherige schriftliche Zustimmung. Öffentlichkeit ist keine Datenlizenz.",
+          "status": "verified",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "vebeg",
+      "name": "VEBEG",
+      "official_website": "https://www.vebeg.de/",
+      "source_type": "public_authority",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 2,
+        "buyer_premium_claim": "0 % Aufgeld / keine Käufergebühren",
+        "vat_claim": "gesetzl. USt.; §25a nur wenn ausdrücklich angegeben",
+        "access_claim": "nur Unternehmer / jur. Personen; Gewerbenachweis",
+        "relevance_claim": "Bundes-/Behördenbestände, größere Posten",
+        "priority_class": "A+",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "0 % Aufgeld / keine Käufergebühren",
+          "status": "verified",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "gesetzl. USt.; §25a nur wenn ausdrücklich angegeben",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "nur Unternehmer / jur. Personen; Gewerbenachweis",
+          "status": "verified"
+        },
+        "b2b_only": true,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "FAQ bestätigt kein Bieteraufgeld und keine sonstigen Käufergebühren; Los- und Rechnungskonditionen bleiben maßgeblich."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "A+",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Bundes-/Behördenbestände, größere Posten",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "0 % Aufgeld / keine Käufergebühren",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile2",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.vebeg.de/de/faq/index.htm",
+          "summary": "FAQ bestätigt kein Bieteraufgeld und keine sonstigen Käufergebühren; Los- und Rechnungskonditionen bleiben maßgeblich.",
+          "status": "verified",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        },
+        {
+          "id": "registration",
+          "kind": "official_web",
+          "url": "https://www.vebeg.de/de/auktionen/konto_registrieren.htm",
+          "summary": "Privatpersonen dürfen nicht teilnehmen.",
+          "status": "verified",
+          "checked_at": "2026-10-10"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "justiz-auktion",
+      "name": "Justiz-Auktion",
+      "official_website": "https://www.justiz-auktion.de/",
+      "source_type": "public_authority",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 3,
+        "buyer_premium_claim": "kein klassisches Käuferaufgeld ersichtlich",
+        "vat_claim": "laut Bedingungen keine USt.-Ausweisung",
+        "access_claim": "Verbraucher und Unternehmer je Verfahrensart",
+        "relevance_claim": "Pfand-/Justiz-/Behördenverwertung",
+        "priority_class": "A+",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "kein klassisches Käuferaufgeld ersichtlich",
+          "status": "unconfirmed",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "Aktuelle AGB §14: Verantwortlichkeit beim Veräußerer; keine globale Aussage zur USt.-Ausweisung.",
+          "status": "contradictory",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "Verbraucher und Unternehmer je Verfahrensart",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "AGB August 2025 §14 weist steuerliche Verantwortung dem Veräußerer zu; §9 verlangt vorherige Zustimmung zur Inhaltsnutzung. Atlas-Pauschalaussage zur Umsatzsteuer widerspricht aktuellem Text."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "permission_required",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "A+",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Pfand-/Justiz-/Behördenverwertung",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "kein klassisches Käuferaufgeld ersichtlich",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile3",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.justiz-auktion.de/agb_de.php",
+          "summary": "AGB August 2025 §14 weist steuerliche Verantwortung dem Veräußerer zu; §9 verlangt vorherige Zustimmung zur Inhaltsnutzung. Atlas-Pauschalaussage zur Umsatzsteuer widerspricht aktuellem Text.",
+          "status": "contradictory",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "haemmerle",
+      "name": "Hämmerle",
+      "official_website": "https://www.haemmerle.de/",
+      "source_type": "commercial_asset_auction",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 4,
+        "buyer_premium_claim": "15 %",
+        "vat_claim": "zzgl. gesetzlicher USt.",
+        "access_claim": "auktionabhängig; keine generelle B2B-Pflicht in allg. Bedingungen",
+        "relevance_claim": "Unternehmensverkäufe, Inventar, Lots",
+        "priority_class": "A",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "15 %",
+          "status": "unconfirmed",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "zzgl. gesetzlicher USt.",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "auktionabhängig; keine generelle B2B-Pflicht in allg. Bedingungen",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "Aktuelle AGB-Seite zeigt JavaScript-/Browserprüfung. Historischer offizieller Katalog nennt 15 Prozent; keine Bestätigung aktueller allgemeiner Gebühren. Prüfung nicht umgangen."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "A",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Unternehmensverkäufe, Inventar, Lots",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "15 %",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile4",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.haemmerle.de/de/AGB",
+          "summary": "Aktuelle AGB-Seite zeigt JavaScript-/Browserprüfung. Historischer offizieller Katalog nennt 15 Prozent; keine Bestätigung aktueller allgemeiner Gebühren. Prüfung nicht umgangen.",
+          "status": "not_verifiable",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "proventura",
+      "name": "Proventura",
+      "official_website": "https://www.proventura.de/",
+      "source_type": "commercial_asset_auction",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 5,
+        "buyer_premium_claim": "meist 15 % aktuell; Bedingungen auktionabhängig",
+        "vat_claim": "Sonderfälle ohne USt. auf Ware möglich",
+        "access_claim": "starker B2B-Fokus",
+        "relevance_claim": "Insolvenz-/Betriebsauflösung",
+        "priority_class": "A",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "meist 15 % aktuell; Bedingungen auktionabhängig",
+          "status": "unconfirmed",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "Sonderfälle ohne USt. auf Ware möglich",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "starker B2B-Fokus",
+          "status": "verified"
+        },
+        "b2b_only": true,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "Offiziell abrufbarer PDF-Text Stand 10/2023 nennt B2B und 15 Prozent zzgl. USt.; Suchindex bezeichnet denselben URL als Stand 01/2026. Dokumentversionskonflikt, Aktualität nicht gesichert."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "A",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Insolvenz-/Betriebsauflösung",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "meist 15 % aktuell; Bedingungen auktionabhängig",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile5",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.proventura.de/userfiles/assets/image/AGB_Proventura.pdf?v=3",
+          "summary": "Offiziell abrufbarer PDF-Text Stand 10/2023 nennt B2B und 15 Prozent zzgl. USt.; Suchindex bezeichnet denselben URL als Stand 01/2026. Dokumentversionskonflikt, Aktualität nicht gesichert.",
+          "status": "contradictory",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "restlos",
+      "name": "RESTLOS",
+      "official_website": "https://restlos.com/",
+      "source_type": "commercial_asset_auction",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 6,
+        "buyer_premium_claim": "18 %",
+        "vat_claim": "Regelfall USt.; bei nicht USt.-behafteter Ware nur Aufgeld besteuert",
+        "access_claim": "auktionabhängig",
+        "relevance_claim": "sehr hoher Dealflow, Lots",
+        "priority_class": "A",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "18 %",
+          "status": "verified",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "Regelfall USt.; bei nicht USt.-behafteter Ware nur Aufgeld besteuert",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "auktionabhängig",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "AGB nennen 18 Prozent zzgl. USt. als Regelfall, ausdrücklich abweichende Vereinbarungen möglich."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "A",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "sehr hoher Dealflow, Lots",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "18 %",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile6",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://restlos.com/agb/",
+          "summary": "AGB nennen 18 Prozent zzgl. USt. als Regelfall, ausdrücklich abweichende Vereinbarungen möglich.",
+          "status": "verified",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "assetorb",
+      "name": "AssetOrb",
+      "official_website": "https://www.assetorb.com/",
+      "source_type": "commercial_asset_auction",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "outdated",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 7,
+        "buyer_premium_claim": "18 %",
+        "vat_claim": "Los kann 19 % oder 0 % auf Ware ausweisen",
+        "access_claim": "Registrierung",
+        "relevance_claim": "Betriebsinventar / Möbel",
+        "priority_class": "A",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "18 %",
+          "status": "unconfirmed",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "Los kann 19 % oder 0 % auf Ware ausweisen",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "Registrierung",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "Kostenlose Registrierung und zusätzliche Kosten bestätigt; allgemeine 18-Prozent-Regel nicht unabhängig bestätigt."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "A",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Betriebsinventar / Möbel",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "18 %",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile7",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.assetorb.com/registrieren-bei-assetorb/",
+          "summary": "AssetOrb-Registrierungsseite leitet bei Öffnung auf aurena.de/service/mitsteigern um. Suchindex liefert ältere AssetOrb-Inhalte; Identität, Konditionen und Datenrechte erneut prüfen.",
+          "status": "outdated",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen.",
+        "AssetOrb URL-Redirect zu aurena.de; mögliche Plattformänderung nicht unabhängig geklärt."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "baden-auktionen",
+      "name": "Baden Auktionen",
+      "official_website": "https://badenauktionen.de/",
+      "source_type": "commercial_asset_auction",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 8,
+        "buyer_premium_claim": "18 %",
+        "vat_claim": "Lose ohne MwSt. auf Zuschlag möglich",
+        "access_claim": "Registrierung",
+        "relevance_claim": "Betriebsauflösung / Inventar",
+        "priority_class": "A",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "18 %",
+          "status": "unconfirmed",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "Lose ohne MwSt. auf Zuschlag möglich",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "Registrierung",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "Seite nennt 18 Prozent in besonderen Fahrzeugbedingungen; nicht auf alle Möbelauktionen übertragbar. Allgemeine AGB separat."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "A",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Betriebsauflösung / Inventar",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "18 %",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile8",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://badenauktionen.de/versteigerungsbedingungen/",
+          "summary": "Seite nennt 18 Prozent in besonderen Fahrzeugbedingungen; nicht auf alle Möbelauktionen übertragbar. Allgemeine AGB separat.",
+          "status": "partially_verified",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "bickel",
+      "name": "Auktionshaus Bickel",
+      "official_website": "https://www.auktionshaus-bickel.de/",
+      "source_type": "commercial_asset_auction",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 9,
+        "buyer_premium_claim": "18 %",
+        "vat_claim": "Lose ohne MwSt. auf Zuschlag möglich",
+        "access_claim": "Registrierung",
+        "relevance_claim": "Betriebsauflösung / Inventar",
+        "priority_class": "A",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "18 %",
+          "status": "verified",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "Lose ohne MwSt. auf Zuschlag möglich",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "Registrierung",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "FAQ nennt 18 Prozent, sofern Katalog kein höheres/niedrigeres Aufgeld nennt."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "A",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Betriebsauflösung / Inventar",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "18 %",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile9",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.auktionshaus-bickel.de/de/faq/allgemeineinformationen",
+          "summary": "FAQ nennt 18 Prozent, sofern Katalog kein höheres/niedrigeres Aufgeld nennt.",
+          "status": "verified",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "netbid",
+      "name": "NetBid",
+      "official_website": "https://www.netbid.com/",
+      "source_type": "commercial_asset_auction",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 10,
+        "buyer_premium_claim": "auktion-/losabhängig",
+        "vat_claim": "Regelbesteuerung; Sonderfälle möglich",
+        "access_claim": "teilweise Gewerbenachweis",
+        "relevance_claim": "Insolvenz-/Industrieverwertung",
+        "priority_class": "B",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "auktion-/losabhängig",
+          "status": "unconfirmed",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "Regelbesteuerung; Sonderfälle möglich",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "teilweise Gewerbenachweis",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "Offizielle Plattform-AGB gefunden; konkrete Gebühren/Steuer je Auktion prüfen, kein erlaubter Katalogfeed nachgewiesen."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "B",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Insolvenz-/Industrieverwertung",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "auktion-/losabhängig",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile10",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.netbid.com/de/agb",
+          "summary": "Offizielle Plattform-AGB gefunden; konkrete Gebühren/Steuer je Auktion prüfen, kein erlaubter Katalogfeed nachgewiesen.",
+          "status": "partially_verified",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "troostwijk-dechow",
+      "name": "Troostwijk / DECHOW",
+      "official_website": "https://www.troostwijkauctions.com/",
+      "source_type": "commercial_asset_auction",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 11,
+        "buyer_premium_claim": "vor Gebot ausgewiesen; variiert",
+        "vat_claim": "regelmäßig USt.; Sonder-/Differenzfälle möglich",
+        "access_claim": "Registrierung",
+        "relevance_claim": "sehr hoher Dealflow",
+        "priority_class": "B",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "vor Gebot ausgewiesen; variiert",
+          "status": "unconfirmed",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "regelmäßig USt.; Sonder-/Differenzfälle möglich",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "Registrierung",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "Deutsche DECHOW-Käuferbedingungen gefunden; offizielle ATLAS-API existiert, verlangt ATLAS-Konto und richtet sich an order/inventory Integration. Kein kostenloser Käufer-Katalogzugang belegt."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "partially_verified",
+          "url": "https://apidocs.tbauctions.com/"
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "B",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "sehr hoher Dealflow",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "vor Gebot ausgewiesen; variiert",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "official_partner_portal",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile11",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.troostwijkauctions.com/de/general-terms-and-conditions-of-troostwijkauctions-com-for-buyers-dechow",
+          "summary": "Deutsche DECHOW-Käuferbedingungen gefunden; offizielle ATLAS-API existiert, verlangt ATLAS-Konto und richtet sich an order/inventory Integration. Kein kostenloser Käufer-Katalogzugang belegt.",
+          "status": "partially_verified",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        },
+        {
+          "id": "partner-api",
+          "kind": "official_web",
+          "url": "https://apidocs.tbauctions.com/",
+          "summary": "ATLAS-Konto erforderlich; order/inventory APIs. Kein Buyer-Katalogrecht nachgewiesen; Anbieter nicht kontaktiert.",
+          "status": "verified",
+          "checked_at": "2026-10-10"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "industriewert",
+      "name": "IndustrieWert",
+      "official_website": "https://www.industriewert.de/",
+      "source_type": "commercial_asset_auction",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 12,
+        "buyer_premium_claim": "18 % online / teils 15 %",
+        "vat_claim": "regelmäßig USt. auf Gesamtpreis",
+        "access_claim": "Online teils USt-ID erforderlich",
+        "relevance_claim": "Betriebsinventar",
+        "priority_class": "B",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "18 % online / teils 15 %",
+          "status": "verified",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "regelmäßig USt. auf Gesamtpreis",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "Online teils USt-ID erforderlich",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "Offizielle Hilfe nennt 15 Prozent Präsenz/18 Prozent online; aktuelle konkrete Auktionsbedingungen zusätzlich prüfen."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "B",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Betriebsinventar",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "18 % online / teils 15 %",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile12",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.industriewert.de/index.php/service-downloads/hilfe-von-a-bis-z",
+          "summary": "Offizielle Hilfe nennt 15 Prozent Präsenz/18 Prozent online; aktuelle konkrete Auktionsbedingungen zusätzlich prüfen.",
+          "status": "verified",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "perlick",
+      "name": "Perlick Industrieauktionen",
+      "official_website": "https://www.perlick.de/",
+      "source_type": "commercial_asset_auction",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 13,
+        "buyer_premium_claim": "18 %",
+        "vat_claim": "regelmäßig USt. auf Zuschlag + Aufgeld",
+        "access_claim": "Registrierung",
+        "relevance_claim": "Industrie-/Betriebsauflösung",
+        "priority_class": "B",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "18 %",
+          "status": "unconfirmed",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "regelmäßig USt. auf Zuschlag + Aufgeld",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "Registrierung",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "AGB nennen 18 Prozent soweit nicht anders vereinbart."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "B",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Industrie-/Betriebsauflösung",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "18 %",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile13",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.perlick.de/Wir_ueber_uns/Bedingungen.htm",
+          "summary": "Offizieller Suchindex nennt 18 Prozent sofern nicht abweichend vereinbart; Seitenöffnung läuft in Timeout. Aktuellen Dokumenttext nicht vollständig geprüft.",
+          "status": "partially_verified",
+          "checked_at": "2026-10-10",
+          "method": "official_search_index; direct_page_timeout",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "sen-sen",
+      "name": "Sen & Sen",
+      "official_website": "https://www.sen-sen.de/",
+      "source_type": "commercial_asset_auction",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 14,
+        "buyer_premium_claim": "18 %",
+        "vat_claim": "auktionabhängig, häufig Regelbesteuerung",
+        "access_claim": "Registrierung",
+        "relevance_claim": "Betriebsverwertung",
+        "priority_class": "B",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "18 %",
+          "status": "unconfirmed",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "auktionabhängig, häufig Regelbesteuerung",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "Registrierung",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "Offizielle AGB beschreiben Aufgeld; 18-Prozent-Pauschale nicht verifiziert. Impressum beschreibt Software-Schnittstelle, keine Datenzugangserlaubnis für Dritte."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "B",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Betriebsverwertung",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "18 %",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile14",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.sen-sen.de/php/dilib.php?command=showmiddle&middlenumber=2",
+          "summary": "Offizielle AGB beschreiben Aufgeld; 18-Prozent-Pauschale nicht verifiziert. Impressum beschreibt Software-Schnittstelle, keine Datenzugangserlaubnis für Dritte.",
+          "status": "partially_verified",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "sebworld",
+      "name": "Sebworld Auktionen",
+      "official_website": "https://www.sebworld-auktionen.de/",
+      "source_type": "commercial_asset_auction",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 15,
+        "buyer_premium_claim": "18 %",
+        "vat_claim": "regelmäßig USt.; Auktion prüfen",
+        "access_claim": "teils privat möglich",
+        "relevance_claim": "sehr möbelrelevant",
+        "priority_class": "B",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "18 %",
+          "status": "verified",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "regelmäßig USt.; Auktion prüfen",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "teils privat möglich",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "Offizielle AGB bestätigen 18 Prozent und USt. auf Zuschlag plus Aufgeld; Abhol-/Demontagekosten zusätzlich."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "B",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "sehr möbelrelevant",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "18 %",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile15",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.sebworld-auktionen.de/agb",
+          "summary": "Offizielle AGB bestätigen 18 Prozent und USt. auf Zuschlag plus Aufgeld; Abhol-/Demontagekosten zusätzlich.",
+          "status": "verified",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "surplex",
+      "name": "Surplex",
+      "official_website": "https://www.surplex.com/",
+      "source_type": "commercial_asset_auction",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 16,
+        "buyer_premium_claim": "lotabhängig",
+        "vat_claim": "USt. zusätzlich, sofern nicht anders angegeben",
+        "access_claim": "Registrierung",
+        "relevance_claim": "Betriebs-/Industrieposten",
+        "priority_class": "B",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "lotabhängig",
+          "status": "unconfirmed",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "USt. zusätzlich, sofern nicht anders angegeben",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "Registrierung",
+          "status": "verified"
+        },
+        "b2b_only": true,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "Offizielle AGB unterscheiden spezielle Versteigerungsbedingungen. Hilfe bestätigt ausschließlich Unternehmen; Atlas lässt diese Einschränkung aus."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "B",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Betriebs-/Industrieposten",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "lotabhängig",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile16",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.surplex.com/agb",
+          "summary": "Offizielle AGB unterscheiden spezielle Versteigerungsbedingungen. Hilfe bestätigt ausschließlich Unternehmen; Atlas lässt diese Einschränkung aus.",
+          "status": "partially_verified",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        },
+        {
+          "id": "registration",
+          "kind": "official_web",
+          "url": "https://help.surplex.com/hc/de/articles/32290155198097-Kann-ich-mich-als-Privatperson-anmelden",
+          "summary": "Ausschließlich Unternehmen.",
+          "status": "verified",
+          "checked_at": "2026-10-10"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "ac1",
+      "name": "AC1 Auktionen Chemnitz",
+      "official_website": "https://www.chemnitz-auktionshaus.de/",
+      "source_type": "commercial_asset_auction",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 17,
+        "buyer_premium_claim": "15 % Präsenz / 18 % online",
+        "vat_claim": "zzgl. geltender USt.; Los prüfen",
+        "access_claim": "Registrierung",
+        "relevance_claim": "regionale Verwertung",
+        "priority_class": "B",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "15 % Präsenz / 18 % online",
+          "status": "verified",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "zzgl. geltender USt.; Los prüfen",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "Registrierung",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "Offizielle Bedingungen bestätigen 15 Prozent Präsenz und 18 Prozent online jeweils zzgl. geltender USt."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "B",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "regionale Verwertung",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "15 % Präsenz / 18 % online",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile17",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.chemnitz-auktionshaus.de/versteigerungsbedingungen--id-27-minicms.html",
+          "summary": "Offizielle Bedingungen bestätigen 15 Prozent Präsenz und 18 Prozent online jeweils zzgl. geltender USt.",
+          "status": "verified",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "ertax",
+      "name": "ERTAX",
+      "official_website": "https://www.ertax.de/",
+      "source_type": "commercial_asset_auction",
+      "relevant_categories": [
+        "Möbel",
+        "Büroinventar"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 18,
+        "buyer_premium_claim": "18 %",
+        "vat_claim": "regelmäßig USt. auf Zuschlag + Aufgeld",
+        "access_claim": "Registrierung",
+        "relevance_claim": "Insolvenz-/Betriebsverwertung",
+        "priority_class": "B",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "18 %",
+          "status": "unconfirmed",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "regelmäßig USt. auf Zuschlag + Aufgeld",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "Registrierung",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": true,
+        "special_conditions": [
+          "Online-Bedingungen Stand 2018 aktuell abrufbar: 18 Prozent, USt. auf Gesamtpreis; Aktualität des alten Dokumentstands ungeklärt."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "B",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Insolvenz-/Betriebsverwertung",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "18 %",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile18",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.ertax.de/de/info-download/onlineauktion-versteigerungs-und-verkaufsbedingungen",
+          "summary": "Online-Bedingungen Stand 2018 aktuell abrufbar: 18 Prozent, USt. auf Gesamtpreis; Aktualität des alten Dokumentstands ungeklärt.",
+          "status": "partially_verified",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "eder",
+      "name": "Auktionshaus Dr. Eder, Köln",
+      "official_website": "https://www.auktion-eder.de/",
+      "source_type": "estate_art_auction",
+      "relevant_categories": [
+        "Designmöbel",
+        "Nachlass",
+        "Einrichtung"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 19,
+        "buyer_premium_claim": "25 % inkl. MwSt.",
+        "vat_claim": "Nachlass-/Kunstauktionslogik; Los prüfen",
+        "access_claim": "nein",
+        "relevance_claim": "Nachlässe / Designmöbel",
+        "priority_class": "C",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "25 % inkl. MwSt.",
+          "status": "verified",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "Nachlass-/Kunstauktionslogik; Los prüfen",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "nein",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": null,
+        "special_conditions": [
+          "Bedingungen Ziffer13: 25 Prozent inkl. USt.; live lot-tissimo 30,95 Prozent inkl. USt. Kanalabhängigkeit ergänzen."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "C",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Nachlässe / Designmöbel",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "25 % inkl. MwSt.",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile19",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.auktion-eder.de/wp-content/uploads/2021/05/Versteigerungsbedingungen.pdf",
+          "summary": "Bedingungen Ziffer13: 25 Prozent inkl. USt.; live lot-tissimo 30,95 Prozent inkl. USt. Kanalabhängigkeit ergänzen.",
+          "status": "verified",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "henrys",
+      "name": "HENRY's",
+      "official_website": "https://www.henrys.de/",
+      "source_type": "estate_art_auction",
+      "relevant_categories": [
+        "Designmöbel",
+        "Nachlass",
+        "Einrichtung"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 20,
+        "buyer_premium_claim": "25 % inkl. MwSt. (typisch)",
+        "vat_claim": "Sonderkennzeichnungen möglich",
+        "access_claim": "nein",
+        "relevance_claim": "Design / Einrichtung",
+        "priority_class": "C",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "25 % inkl. MwSt. (typisch)",
+          "status": "verified",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "Sonderkennzeichnungen möglich",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "nein",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": null,
+        "special_conditions": [
+          "AGB Stand05/2024 Ziffer8 nennen 25 Prozent inkl. USt., Ausnahmen und Fremdplattformkosten; aktueller konkreter Katalog maßgeblich."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "C",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Design / Einrichtung",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "25 % inkl. MwSt. (typisch)",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile20",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.henrys.de/agb/agb_de.html",
+          "summary": "AGB Stand05/2024 Ziffer8 nennen 25 Prozent inkl. USt., Ausnahmen und Fremdplattformkosten; aktueller konkreter Katalog maßgeblich.",
+          "status": "partially_verified",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    },
+    {
+      "id": "weidler",
+      "name": "Auktionshaus Weidler",
+      "official_website": "https://www.auktionshausweidler.de/",
+      "source_type": "estate_art_auction",
+      "relevant_categories": [
+        "Designmöbel",
+        "Nachlass",
+        "Einrichtung"
+      ],
+      "updated_at": "2026-10-10",
+      "verification_status": "partially_verified",
+      "atlas": {
+        "document_date": "2026-09-24",
+        "section": "2. Deutschland-Matrix",
+        "row": 21,
+        "buyer_premium_claim": "25 % zzgl. MwSt. = 29,75 %",
+        "vat_claim": "Los prüfen",
+        "access_claim": "nein",
+        "relevance_claim": "Nachlässe / Einrichtung",
+        "priority_class": "C",
+        "claim_status": "unconfirmed"
+      },
+      "platform_conditions": {
+        "buyer_premium": {
+          "summary": "25 % zzgl. MwSt. = 29,75 %",
+          "status": "verified",
+          "evidence_ids": [
+            "official-terms"
+          ],
+          "calculation_default": null
+        },
+        "vat": {
+          "summary": "Los prüfen",
+          "status": "unconfirmed",
+          "calculation_default": null
+        },
+        "access_requirements": {
+          "summary": "nein",
+          "status": "unconfirmed"
+        },
+        "b2b_only": null,
+        "registration_required_for_bidding": null,
+        "special_conditions": [
+          "Aktuelle AGB nennen 25 Prozent zzgl. USt.; Deutsche-Post-Auktionen gesondert. Historisches Bieterformular nennt 24 Prozent und ist widersprüchlich, keine globale Regel."
+        ],
+        "lot_conditions_required": true
+      },
+      "data_access": {
+        "api": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "feed": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "authorized_export": {
+          "status": "unconfirmed",
+          "url": null
+        },
+        "commercial_reuse": "unconfirmed",
+        "automated_access_authorized": false,
+        "connector": null,
+        "enabled": false,
+        "import_mode": "user_authorized_files_only",
+        "rate_limit": null,
+        "refresh_frequency": null,
+        "cost": null,
+        "implementation_effort": "manual_import_available; live_unknown"
+      },
+      "economic_priority": {
+        "class": "C",
+        "basis": "atlas_hypothesis",
+        "furniture_relevance": "Nachlässe / Einrichtung",
+        "observed_offer_volume": null,
+        "lot_sizes": null,
+        "fees": "25 % zzgl. MwSt. = 29,75 %",
+        "transport_effort": null,
+        "underpricing_evidence": null,
+        "purchase_recommendation": false
+      },
+      "technical_priority": {
+        "class": "blocked",
+        "basis": "Kein autorisierter kostenloser gewerblicher Katalogzugang nachgewiesen.",
+        "api_evidence": "unknown",
+        "data_quality": null,
+        "refreshability": null
+      },
+      "evidence": [
+        {
+          "id": "atlas-row",
+          "kind": "user_document",
+          "reference": "Beschaffungsatlas 24.09.2026 Abschnitt2 Zeile21",
+          "status": "unconfirmed",
+          "checked_at": "2026-10-10"
+        },
+        {
+          "id": "official-terms",
+          "kind": "official_web",
+          "url": "https://www.auktionshausweidler.de/allgemeine-geschaeftsbedingungen/",
+          "summary": "Aktuelle AGB nennen 25 Prozent zzgl. USt.; Deutsche-Post-Auktionen gesondert. Historisches Bieterformular nennt 24 Prozent und ist widersprüchlich, keine globale Regel.",
+          "status": "verified",
+          "checked_at": "2026-10-10",
+          "method": "official_page_open_and_search_index",
+          "scope": "platform_only"
+        }
+      ],
+      "uncertainties": [
+        "Kein pauschaler Gebühren-/Steuerstandard für konkrete Lose.",
+        "Kommerzielle Datenrechte, Abruflimits und Aktualisierung ungeklärt.",
+        "Volumen, Unterbewertungen und Transportkosten nicht gemessen."
+      ],
+      "categories_basis": "atlas_relevance_hypothesis; not a live catalogue observation"
+    }
+  ]
+}

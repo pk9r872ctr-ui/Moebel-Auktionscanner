@@ -1,3 +1,5 @@
+> Historischer Grundlagenstand Auftrag 02. Änderungen aus Auftrag 03: [Bericht](REPORT-03.md), [Speicherung](STORAGE-03.md), [Architektur](ARCHITECTURE-03.md).
+
 # Datenvertrag v1 und Nutzerimport
 
 Zwei Eingangsformate, ein Modell: `Listing` in `listings.py`. JSON hat genau
