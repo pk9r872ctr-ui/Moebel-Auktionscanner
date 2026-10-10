@@ -2,3 +2,8 @@ __pycache__/
 .pytest_cache/
 .venv/
 .streamlit/secrets.toml
+inbox/
+*.sqlite
+*.sqlite3
+*.sqlite3-*
+*.sqlite-*

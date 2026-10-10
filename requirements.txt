@@ -1,1 +1,1 @@
-streamlit>=1.38,<2
+streamlit[auth]>=1.53,<2
