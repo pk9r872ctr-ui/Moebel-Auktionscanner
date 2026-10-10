@@ -8,7 +8,7 @@ from scoring import economics
 def assess_listing(lot, assumptions, *, review_confirmed=False, now=None):
     now = now or datetime.now(timezone.utc)
     blockers = []
-    if not review_confirmed:
+    if type(review_confirmed) is not bool or not review_confirmed:
         blockers.append("Kosten, Gebührenbasis und Verkaufsschätzung noch nicht manuell geprüft")
     if lot.status != "active":
         blockers.append("Auktionsstatus nicht aktiv")

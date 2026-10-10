@@ -58,3 +58,56 @@ def test_worker_store_visible_without_demo_fallback(tmp_path, monkeypatch):
     assert any("TEST ONLY" in h.value for h in app.subheader)
     assert any("Keine belastbare Empfehlung" in w.value for w in app.warning)
     assert not any("Fiktiver Netto-Zuschlag" in m.value for m in app.markdown)
+
+
+def test_persisted_watchlist_and_filters(tmp_path, monkeypatch):
+    from scanner import ListingStore
+    from imports import parse_import
+    from test_imports import raw_listing, encode, NOW
+    store = ListingStore(tmp_path / "scanner.sqlite3")
+    store.ingest(parse_import(encode(raw_listing()), "json", NOW), "internal", "test")
+    monkeypatch.setenv("SCANNER_DATABASE", store.path)
+    app = AppTest.from_file(Path(__file__).resolve().parents[1] / "app.py").run()
+    app.radio[0].set_value("import").run()
+    assert not app.exception
+    decision = next(s for s in app.selectbox if s.label == "Entscheidung")
+    decision.set_value("watchlist").run()
+    next(b for b in app.button if b.label == "Entscheidung für diesen Stand speichern").click().run()
+    assert not app.exception
+    assert store.decisions("internal")[0]["decision"] == "watchlist"
+    assert any("Keine belastbare Empfehlung" in w.value for w in app.warning)
+    next(t for t in app.text_input if t.label == "Suche im Titel").set_value("no matching listing").run()
+    assert not app.exception
+    assert not any("TEST ONLY" in h.value for h in app.subheader)
+
+
+def test_full_cost_ui_stays_blocked_until_explicit_complete_plan(tmp_path, monkeypatch):
+    from scanner import ListingStore
+    from imports import parse_import
+    from test_imports import raw_listing, encode, NOW
+    store = ListingStore(tmp_path / "scanner.sqlite3")
+    from datetime import datetime, timezone, timedelta
+    raw = raw_listing()
+    raw["observed_at"] = datetime.now(timezone.utc).isoformat()
+    raw["ends_at"] = (datetime.now(timezone.utc) + timedelta(days=1)).isoformat()
+    store.ingest(parse_import(encode(raw), "json"), "internal", "test")
+    monkeypatch.setenv("SCANNER_DATABASE", store.path)
+    app = AppTest.from_file(Path(__file__).resolve().parents[1] / "app.py").run()
+    app.radio[0].set_value("import").run()
+    app.selectbox[0].set_value("regular").run()
+    next(c for c in app.checkbox if c.label == "Kosten, Gebührenbasis und Verkaufsschätzung für dieses Los geprüft").check().run()
+    assert any("ungeklärt" in w.value for w in app.warning)
+    # Zero additional costs require deliberate input; uncertain resale/liquidity explicit.
+    for control in app.number_input:
+        if control.key and str(control.key).startswith("plan:"):
+            value = 3000.0 if "resale_" in str(control.key) and "days" not in str(control.key) else 0.0
+            if "available_cash" in str(control.key):
+                value = 10000.0
+            if "resale_days" in str(control.key):
+                value = 30.0
+            control.set_value(value)
+    next(s for s in app.selectbox if s.label == "Einkaufssteuer laut Los-/Rechnungsbeleg").set_value("regular")
+    next(t for t in app.text_input if t.label == "Planbelege und Schätzmethode").set_value("TEST ONLY synthetic manual plan, no market validation")
+    app.run()
+    assert not app.exception
+    assert any("Deckungsbeitrag" in m.value for m in app.markdown)

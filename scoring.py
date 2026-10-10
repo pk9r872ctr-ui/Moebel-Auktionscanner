@@ -43,6 +43,9 @@ def economics(current_bid, expected_resale_gross, buyer_premium, item_vat, premi
     VAT on a combined hammer+premium base, gross hammer bids or minimum fees.
     Margin taxation is intentionally blocked pending verified tax/purchase basis.
     """
+    for name in ("vat_recoverable", "item_vat_deductible", "premium_vat_deductible"):
+        if type(getattr(a, name)) is not bool:
+            raise ValueError(f"{name}: bool erforderlich")
     for name, value in dict(bid=current_bid, resale=expected_resale_gross,
                             premium=buyer_premium, transport=a.transport,
                             refurbishment=a.refurbishment, storage=a.storage,

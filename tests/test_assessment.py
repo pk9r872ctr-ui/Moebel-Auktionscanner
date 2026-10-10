@@ -44,3 +44,10 @@ def test_estimated_fee_and_unknown_tax_block():
     for mode in ("unknown", "margin"):
         assert assess_listing(lot, replace(A, sale_tax_mode=mode), review_confirmed=True, now=NOW)["status"] == "blocked"
     assert assess_listing(lot, replace(A, vat_recoverable=True, fixed_input_vat=200), review_confirmed=True, now=NOW)["status"] == "blocked"
+
+
+def test_review_string_does_not_authorize_scenario():
+    from imports import parse_import
+    from test_imports import raw_listing, encode, NOW
+    lot = parse_import(encode(raw_listing()), "json", NOW).listings[0]
+    assert assess_listing(lot, Assumptions(sale_tax_mode="regular"), review_confirmed="false", now=NOW)["status"] == "blocked"
