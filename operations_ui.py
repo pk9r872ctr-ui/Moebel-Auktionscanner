@@ -56,7 +56,8 @@ def render_storage():
         if st.session_state.get('_encrypted_backup'):
             st.caption('Snapshot erstellt: '+st.session_state.get('_backup_created_at','ungeklärt')+' · nach Änderungen erneut erstellen.')
             st.download_button('Verschlüsseltes Backup in Dateien speichern',st.session_state['_encrypted_backup'],'moebel-backup.enc','application/octet-stream')
-        uploaded=st.file_uploader('Verschlüsseltes Backup wiederherstellen',type=['enc'],key='restore_upload')
+        # iOS may not recognize .enc; validate content exclusively in restore_encrypted.
+        uploaded=st.file_uploader('Verschlüsseltes Backup wiederherstellen',key='restore_upload')
         confirmed=st.checkbox('Eigene vertrauenswürdige Sicherung; als neue Sitzungskopie öffnen',key='restore_confirmed')
         if st.button('Backup prüfen und Sitzungskopie öffnen',disabled=not uploaded or not confirmed,key='restore_backup'):
             restored=restore_encrypted(uploaded.getvalue(),password)

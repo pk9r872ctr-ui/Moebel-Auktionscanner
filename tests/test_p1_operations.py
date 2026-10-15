@@ -137,3 +137,30 @@ def test_corrupt_configured_database_does_not_hide_restore_ui(tmp_path,monkeypat
     assert any(button.label=='Backup prüfen und Sitzungskopie öffnen' for button in app.button)
     assert not any(button.label=='Verschlüsselte Sicherung erstellen' for button in app.button)
     assert bad.read_bytes()==b'SYNTHETIC corrupt bytes'
+
+
+def test_restore_picker_has_no_extension_filter(monkeypatch):
+    monkeypatch.delenv('SCANNER_DATABASE',raising=False)
+    app=AppTest.from_file(Path(__file__).resolve().parents[1]/'app.py')
+    app.session_state['section']='Speicher';app.run()
+    assert not app.exception
+    uploaders=app.get('file_uploader')
+    assert len(uploaders)==1
+    assert uploaders[0].proto.id.endswith('-restore_upload')
+    assert list(uploaders[0].proto.type)==[]
+    restore=next(button for button in app.button if button.label=='Backup prüfen und Sitzungskopie öffnen')
+    assert restore.disabled
+
+
+@pytest.mark.parametrize('payload',[
+    b'',
+    b'%PDF-1.7\n'+b'SYNTHETIC invalid upload'*10,
+    b'SQLite format 3\x00'+b'SYNTHETIC plaintext'*10,
+    HEADER+b'\x00'*100,
+])
+def test_unfiltered_restore_rejects_invalid_contents_without_touching_store(tmp_path,payload):
+    store=prepared(tmp_path)
+    before=Path(store.path).read_bytes()
+    with pytest.raises(ValidationError):
+        restore_encrypted(payload,'SYNTHETIC-password-only-123')
+    assert Path(store.path).read_bytes()==before

@@ -155,3 +155,30 @@ manuell deklarierte Szenarien, keine belastbare autonome Kaufempfehlung.
 
 Keine neuen Dienste, externen Nachrichten, Webseitenabrufe, Kosten oder Deployments;
 kein Auto-Merge. Tests und Code allein beweisen keine produktive Betriebsfähigkeit.
+
+### iPhone-Restore: Dateiauswahl ohne Erweiterungsfilter
+
+Der Restore-Upload setzt keinen Browser-Erweiterungsfilter mehr. iOS kann die
+Datei `moebel-backup.enc` deshalb unabhängig von seiner Dateityperkennung zur
+Auswahl anbieten. Die Dateiendung ist kein Sicherheitsnachweis: Unverändert
+prüft der Server das verschlüsselte Format, das 2-MiB-Limit, Passwort und
+AES-GCM-Authentizität sowie SQLite-Integrität und Schema. Klartextdateien bleiben
+unzulässig. Restore öffnet ausschließlich eine neue Sitzungskopie.
+
+Abnahme auf dem iPhone nach freigegebener Übernahme/Bereitstellung:
+
+1. Als freigegebener Eigentümer anmelden und **Speicher** öffnen.
+2. Unter **Verschlüsseltes Backup wiederherstellen** die lokal gespeicherte
+   `moebel-backup.enc` in Dateien auswählen. Sie darf nicht ausgegraut sein.
+3. Backup-Passwort eingeben, die Vertrauensbestätigung aktivieren und
+   **Backup prüfen und Sitzungskopie öffnen** betätigen.
+4. Sitzungskopie, Daten, Entscheidungen und Importhistorie kontrollieren.
+   Die bisher konfigurierte Datenbank bleibt unverändert.
+5. Mit falschem Passwort oder einer beliebigen Nicht-Backup-Datei muss der
+   Restore scheitern; es darf keine neue Sitzungskopie aktiviert werden.
+
+Hotfix-Prüfung: Python 3.12.14, 231 Tests bestanden (0 fehlgeschlagen), darunter
+5 neue Regressionstestfälle für den ungefilterten Upload und ungültige Inhalte.
+Bestehende Tests für Manipulation, Klartext, Größenlimit, Schema, Authentifizierung
+und Wiederherstellung bleiben grün. Ein echter iPhone-Dateidialog wurde in der
+Entwicklungsumgebung nicht geprüft; die Geräteabnahme steht aus. Kein Deployment.
