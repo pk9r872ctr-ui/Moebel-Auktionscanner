@@ -8,20 +8,26 @@ from listings import ValidationError, timestamp
 import json
 from datetime import datetime, timezone, timedelta
 from intelligence import analyze_listing, filter_listings, possible_duplicates
-from extended_economics import ExtendedPlan, assess_extended
+from extended_economics import ExtendedPlan, assess_extended, risk_adjusted_assumptions
 from research_import import parse_research_csv, parse_p0_csv, p0_import_digest
 import hashlib
 import os
 import sqlite3
 from scanner import ListingStore
 from access import enforce_access
+from operations_ui import active_database, storage_status, render_storage, render_sources, render_candidates
 
 st.set_page_config(page_title="Möbel-Auktionsscanner", page_icon="🪑", layout="centered")
 enforce_access()
+st.markdown("""<style>@media(max-width:600px){.block-container{padding:4rem .75rem 3rem;}h1{font-size:1.65rem!important;}}</style>""", unsafe_allow_html=True)
 st.title("🪑 Möbel-Auktionsscanner")
 st.caption("MVP · manuelle Planung · keine Gebotsabgabe")
+st.caption(storage_status())
+section = st.pills("Navigation", ["Arbeitsbereich", "Importe", "Quellen", "Speicher", "Kandidaten"], default="Arbeitsbereich", key="section")
+if section in {"Speicher", "Quellen", "Kandidaten"}:
+    {"Speicher": render_storage, "Quellen": render_sources, "Kandidaten": render_candidates}[section]()
+    st.stop()
 st.info("Interner Scanner · Demo und Nutzerimport getrennt · kein automatischer Live-Abruf")
-st.markdown("""<style>@media(max-width:600px){.block-container{padding:4rem .75rem 3rem;}h1{font-size:1.65rem!important;}}</style>""", unsafe_allow_html=True)
 
 with st.expander("Kosten und Steuerannahmen", expanded=True):
     mode = st.selectbox("Verkaufsbesteuerung", ["unknown", "regular", "exempt", "margin"],
@@ -173,7 +179,21 @@ def show_imported_lots(listings, digest, store=None, workspace="internal", prove
                     plan = ExtendedPlan(**values, purchase_tax_mode=purchase_mode, origin="manual", reference=reference)
                 except ValueError as error:
                     st.error(str(error))
+            with st.expander("Preis- und Nachfragerisiko für dieses Szenario"):
+                st.caption("Manuelle Geschäftsannahmen, keine gemessenen Wahrscheinlichkeiten. Zuschläge erhöhen die Zielmarge; sie werden nicht nochmals als Kosten abgezogen. Arbeitsaufwand und Mindestgewinn im Vollkostenplan erfassen.")
+                price_risk=st.number_input("Preisrisiko: zusätzliche Margenpunkte als Anteil 0–0,5",min_value=0.0,max_value=.5,value=None,key=f"price-risk:{digest}:{lot.key}")
+                demand_risk=st.number_input("Nachfragerisiko: zusätzliche Margenpunkte als Anteil 0–0,5",min_value=0.0,max_value=.5,value=None,key=f"demand-risk:{digest}:{lot.key}")
+                st.caption("Gebraucht-, Refurbished- und Neupreise separat belegen. Hier wird nur der deklarierte Planerlös gerechnet; keine unabhängige Marktwertvalidierung und kein Verkaufsnachweis.")
             assessed = assess_extended(lot, a, plan, review_confirmed=reviewed)
+            if not p0_rows:
+                try:
+                    adjusted=risk_adjusted_assumptions(a,price_risk,demand_risk,plan.reference if plan else "")
+                    assessed=assess_extended(lot,adjusted,plan,review_confirmed=reviewed)
+                    assessed["inputs"]["risk_margin_policy"]={"base":a.target_margin,"price_uplift":price_risk,"demand_uplift":demand_risk,"effective":adjusted.target_margin,"origin":"manual_business_assumption"}
+                    st.caption(f"Risikozielmarge: {adjusted.target_margin:.1%} · kein Rentabilitätsnachweis")
+                except ValueError as error:
+                    assessed.update(status="blocked",economics=None)
+                    assessed["blockers"].append(str(error))
             st.caption(f"Technische Finanzvollständigkeit: {assessed['technical_priority']}/100 · keine wirtschaftliche Bewertung")
             if assessed["status"] == "blocked":
                 st.warning("Keine belastbare Empfehlung: " + "; ".join(assessed["blockers"]))
@@ -181,7 +201,7 @@ def show_imported_lots(listings, digest, store=None, workspace="internal", prove
                 st.info("Manuell geprüftes Planungsszenario; Schätzungen bleiben unsicher. Keine automatische Kaufempfehlung.")
                 show_result(assessed["economics"])
 
-data_mode = st.radio("Datenmodus", ["demo", "import", "live"], format_func=lambda x: {"demo": "Fiktive Demo", "import": "Echte Daten aus Nutzerimport", "live": "Live-Zugang (gesperrt)"}[x])
+data_mode = "import" if section == "Importe" else st.radio("Datenmodus", ["demo", "import", "live"], format_func=lambda x: {"demo": "Fiktive Demo", "import": "Echte Daten aus Nutzerimport", "live": "Live-Zugang (gesperrt)"}[x])
 if data_mode == "demo":
     st.warning("DEMO: Alle Lose, Preise und Gebühren sind fiktiv.")
 
@@ -234,8 +254,9 @@ if data_mode == "import":
                 batch = parse_import(payload, uploaded.name.rsplit(".", 1)[-1].lower())
             st.success(f"{len(batch.listings)} Angebote · {batch.duplicates} Dubletten zusammengeführt")
             digest = p0_import_digest(payload, p0_evidence.getvalue() if p0_evidence else None, p0_confirmation) if import_format.startswith("P0:") else hashlib.sha256(payload).hexdigest()
-            if os.environ.get("SCANNER_DATABASE") and st.button("Geprüften Import dauerhaft speichern", key="persist_upload"):
-                ListingStore(os.environ["SCANNER_DATABASE"]).ingest(batch, os.environ.get("SCANNER_WORKSPACE", "internal"), digest)
+            if active_database() and st.button("Geprüften Import dauerhaft speichern", key="persist_upload"):
+                result = ListingStore(active_database()).ingest(batch, os.environ.get("SCANNER_WORKSPACE", "internal"), digest)
+                st.json(result)
                 st.success("Import atomar gespeichert; unten im Scanner-Speicher verfügbar.")
             show_imported_lots(batch.listings, digest, provenance=getattr(batch, "provenance", ()))
         except ValidationError as error:
@@ -244,7 +265,9 @@ if data_mode == "import":
             st.error("Privater Speicher nicht verfügbar. Import wurde nicht als gespeichert bestätigt.")
     elif uploaded is not None:
         st.warning("Vor dem Import Nutzungsrechte prüfen.")
-    database = os.environ.get("SCANNER_DATABASE")
+    if not active_database():
+        st.info("Nur Sitzungsvorschau: Für Speichern und Sicherungen zur Navigation Speicher wechseln. Ein konfigurierter SQLite-Pfad garantiert keine Cloud-Persistenz.")
+    database = active_database()
     if database:
         st.subheader("Angebote aus dem Datei-Scanner")
         st.button("Scanner-Daten aktualisieren")

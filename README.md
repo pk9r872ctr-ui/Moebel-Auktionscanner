@@ -6,6 +6,12 @@ nicht nachgewiesen. Dafür ist ein getesteter Import echter, rechtmäßig vom
 Nutzer bereitgestellter JSON-/CSV-Daten implementiert. Demo bleibt getrennt.
 Keine Gebotsabgabe, kein Kauf, keine ERP-Änderung, kein Deployment.
 
+## P1: privater Betrieb und Sicherungen
+
+[Speicherstatus, verschlüsseltes Backup/Restore, iPhone-Abnahme und Grenzen](docs/P1-OPERATIONS.md).
+Keine zugesicherte Neustart-/Redeploy-Persistenz auf Streamlit Community Cloud.
+Backups werden vom Eigentümer heruntergeladen und privat aufbewahrt.
+
 ## P0-Echtdatenimport vorbereiten
 
 [Importweg, Evidenzvertrag, Tests und offene Abnahme](docs/P0-IMPORT-ACCEPTANCE.md).

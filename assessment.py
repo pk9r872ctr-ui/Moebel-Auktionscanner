@@ -8,6 +8,8 @@ from scoring import economics
 def assess_listing(lot, assumptions, *, review_confirmed=False, now=None):
     now = now or datetime.now(timezone.utc)
     blockers = []
+    if lot.terms_reference.startswith("P0:"):
+        blockers.append("Historischer P0-Recherchehinweis bleibt gesperrt")
     if type(review_confirmed) is not bool or not review_confirmed:
         blockers.append("Kosten, Gebührenbasis und Verkaufsschätzung noch nicht manuell geprüft")
     if lot.status != "active":

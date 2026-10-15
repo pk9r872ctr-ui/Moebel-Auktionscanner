@@ -32,6 +32,8 @@ def validate_candidate_export(raw, now=None):
         if not isinstance(candidate, dict) or set(candidate) != {"offer_key", "approved_snapshot_at", "approval_status", "listing"}:
             raise ValidationError("Kandidat unvollständig")
         lot = Listing.parse(candidate["listing"], now)
+        if lot.terms_reference.startswith("P0:"):
+            raise ValidationError("Historische P0-Recherche ist kein Einkaufskandidat")
         if candidate["offer_key"] != list(lot.key) or candidate["approval_status"] != "manually_selected":
             raise ValidationError("Kennung oder Freigabestatus widersprüchlich")
         if timestamp(candidate["approved_snapshot_at"], "approved_snapshot_at") != timestamp(lot.observed_at, "observed_at") or lot.key in seen:

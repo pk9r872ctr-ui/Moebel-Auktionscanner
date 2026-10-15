@@ -108,6 +108,9 @@ def test_full_cost_ui_stays_blocked_until_explicit_complete_plan(tmp_path, monke
             control.set_value(value)
     next(s for s in app.selectbox if s.label == "Einkaufssteuer laut Los-/Rechnungsbeleg").set_value("regular")
     next(t for t in app.text_input if t.label == "Planbelege und Schätzmethode").set_value("TEST ONLY synthetic manual plan, no market validation")
+    for control in app.number_input:
+        if control.key and (str(control.key).startswith("price-risk:") or str(control.key).startswith("demand-risk:")):
+            control.set_value(0.0)
     app.run()
     assert not app.exception
     assert any("Deckungsbeitrag" in m.value for m in app.markdown)

@@ -172,6 +172,13 @@ class ListingStore:
                      if row.get("p0_research") is True and row.get("source_key") == list(lot.key)
                      and row.get("observed_at") == lot.observed_at)
 
+    def import_status(self, workspace):
+        identifier(workspace, "workspace")
+        with closing(self.connect()) as db:
+            rows=db.execute("SELECT i.digest,p.payload FROM imports i LEFT JOIN import_provenance p USING(workspace,digest) WHERE i.workspace=? ORDER BY i.digest",(workspace,)).fetchall()
+        return tuple({"digest":digest,"provenance_rows":len(json.loads(payload)) if payload else 0,
+                      "imported_at":None} for digest,payload in rows)
+
     def record_scan(self, workspace, results):
         identifier(workspace, "workspace")
         with closing(self.connect()) as db, db:
@@ -208,6 +215,21 @@ def _encode_provenance(value):
 def _validate_database(path):
     # Read-only validation avoids changing an unknown/corrupted backup.
     with closing(sqlite3.connect(Path(path).resolve().as_uri() + "?mode=ro", uri=True)) as db:
+        db.execute("PRAGMA trusted_schema=OFF")
+        db.set_progress_handler(lambda: 1, 2_000_000)
+        allowed_tables={"listings","imports","observations","decisions","scan_runs","import_provenance"}
+        for kind,name,sql in db.execute("SELECT type,name,sql FROM sqlite_master"):
+            if kind=="table" and (name not in allowed_tables or "virtual table" in (sql or "").lower()):
+                raise ValidationError("Backup enthält nicht unterstützte Tabellen")
+            if kind=="view" or (kind=="index" and not name.startswith("sqlite_autoindex_")):
+                raise ValidationError("Backup enthält nicht unterstützte Schemaobjekte")
+            if kind=="trigger":
+                action={"observations_no_update":"UPDATE", "observations_no_delete":"DELETE"}.get(name)
+                expected=f"CREATE TRIGGER {name} BEFORE {action} ON observations BEGIN SELECT RAISE(ABORT, 'immutable observation'); END"
+                # sqlite_master omits IF NOT EXISTS on some SQLite releases.
+                actual=" ".join((sql or "").replace("IF NOT EXISTS ", "").split()).rstrip(";").lower()
+                if action is None or actual != " ".join(expected.split()).lower():
+                    raise ValidationError("Backup enthält unerwartete Trigger")
         if db.execute("PRAGMA integrity_check").fetchone()[0] != "ok":
             raise ValidationError("Datenbankintegritätsprüfung fehlgeschlagen")
         version = db.execute("PRAGMA user_version").fetchone()[0]
@@ -238,6 +260,10 @@ def _validate_database(path):
                 ListingStore._keys(workspace, source, source_id)
                 if decision not in {"watchlist", "candidate", "rejected", "unreviewed"} or not isinstance(note, str) or len(note) > 2000:
                     raise ValidationError("Entscheidungsdaten ungültig")
+                if decision == "candidate":
+                    current=db.execute("SELECT payload FROM listings WHERE workspace=? AND source=? AND source_id=?",(workspace,source,source_id)).fetchone()
+                    if current and Listing.parse(json.loads(current[0])).terms_reference.startswith("P0:"):
+                        raise ValidationError("Backup enthält unzulässigen P0-Kandidaten")
                 if not db.execute("SELECT 1 FROM observations WHERE workspace=? AND source=? AND source_id=? AND observed_at=?", (workspace, source, source_id, observed_at)).fetchone():
                     raise ValidationError("Entscheidung ohne Beobachtungsreferenz")
 
