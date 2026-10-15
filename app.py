@@ -9,7 +9,7 @@ import json
 from datetime import datetime, timezone, timedelta
 from intelligence import analyze_listing, filter_listings, possible_duplicates
 from extended_economics import ExtendedPlan, assess_extended
-from research_import import parse_research_csv
+from research_import import parse_research_csv, parse_p0_csv, p0_import_digest
 import hashlib
 import os
 import sqlite3
@@ -107,6 +107,7 @@ def show_imported_lots(listings, digest, store=None, workspace="internal", prove
         with st.expander("Dublettenhinweise"):
             st.json(duplicates)
     for lot in matches:
+        p0_rows = [row for row in original_rows if row.get("p0_research") is True and row.get("source_key") == list(lot.key) and row.get("observed_at") == lot.observed_at]
         with st.container(border=True):
             st.subheader(lot.title)
             st.text(f"NUTZERIMPORT · {lot.source} / {lot.source_id} · {lot.location}")
@@ -114,8 +115,16 @@ def show_imported_lots(listings, digest, store=None, workspace="internal", prove
             basis = {"net": "Netto", "gross": "Brutto", "unknown": "Ungeklärt"}[lot.bid_basis]
             fee = {"net_hammer_plus_net_premium": "Netto-Zuschlag + Netto-Aufgeld", "other": "Nicht unterstützte Basis", "unknown": "Ungeklärt"}[lot.fee_model]
             st.text(f"{kind} · {basis} · {lot.currency} · Gebührenbasis: {fee}")
-            st.text(f"Beobachtet: {lot.observed_at} · Ende: {lot.ends_at or 'ungeklärt'} · Status: {lot.status}")
+            st.text(f"Erfasst (Zeitart siehe Provenienz): {lot.observed_at} · Ende: {lot.ends_at or 'ungeklärt'} · Status: {lot.status}")
             st.link_button("Originalangebot öffnen", lot.listing_url)
+            if p0_rows:
+                st.warning("GESPERRTER RECHERCHEHINWEIS · keine Kaufempfehlung")
+                for row in p0_rows:
+                    st.write(f"Historischer Betrag: {row['price']['value']:,.2f} € · Preisart: {row['price']['kind']} · Nutzerbestätigung separat")
+                    for issue in row["review_issues"]:
+                        st.caption(issue)
+                with st.expander("P0: Originaldaten, Nutzerbestätigung und Evidenz"):
+                    st.json(p0_rows)
             with st.expander("Beobachtungen, Schätzungen und manuelle Angaben"):
                 for name, datum in lot.fields.items():
                     if datum.value is None:
@@ -137,8 +146,8 @@ def show_imported_lots(listings, digest, store=None, workspace="internal", prove
                 if current_decision.get("review_required"):
                     st.warning("Angebot geändert: vorherige Entscheidung erneut prüfen. Kandidatenexport bis dahin gesperrt.")
                 with st.expander("Merkliste und manuelle Entscheidung"):
-                    options = ["unreviewed", "watchlist", "candidate", "rejected"]
-                    decision = st.selectbox("Entscheidung", options, index=options.index(current_decision.get("decision", "unreviewed")), key=f"decision:{digest}:{lot.key}")
+                    options = ["unreviewed", "watchlist", "rejected"] if p0_rows else ["unreviewed", "watchlist", "candidate", "rejected"]
+                    decision = st.selectbox("Entscheidung", options, index=options.index(current_decision.get("decision", "unreviewed")) if current_decision.get("decision", "unreviewed") in options else 0, key=f"decision:{digest}:{lot.key}")
                     note = st.text_input("Prüfnotiz (keine Buchhaltung)", value=current_decision.get("note", ""), max_chars=2000, key=f"note:{digest}:{lot.key}")
                     st.caption("Einkaufskandidat bedeutet manuelle Auswahl, keinen Nachweis von Rentabilität und keine Kaufausführung.")
                     if st.button("Entscheidung für diesen Stand speichern", key=f"save:{digest}:{lot.key}"):
@@ -146,7 +155,7 @@ def show_imported_lots(listings, digest, store=None, workspace="internal", prove
                         st.success("Entscheidung gespeichert")
                     st.caption(f"Beobachtungshistorie: {len(store.history(workspace, lot.source, lot.source_id))} Stände")
             reviewed = st.checkbox("Kosten, Gebührenbasis und Verkaufsschätzung für dieses Los geprüft",
-                                   key=f"review:{digest}:{lot.source}:{lot.source_id}")
+                                   key=f"review:{digest}:{lot.source}:{lot.source_id}", disabled=bool(p0_rows))
             plan = None
             with st.expander("Vollkostenplan für dieses Los"):
                 st.caption("Zusätzliche Bruttokosten neben den importierten Loskosten. Unbekannt bleibt leer; auch 0 muss ausdrücklich eingetragen werden. Keine Plattformgebühren werden aus dem Quellenatlas übernommen.")
@@ -199,19 +208,32 @@ if data_mode == "import":
     st.caption("Kein Live-Abruf. Nur rechtmäßig nutzbare Daten hochladen; Herkunft wird dokumentiert, nicht unabhängig verifiziert. Upload bleibt in dieser Sitzung, außer bei ausdrücklichem Speichern in konfigurierter privater Datenbank.")
     st.download_button("Leere CSV-Vorlage", csv_template(), "auktionen-v1.csv", "text/csv")
     permitted = st.checkbox("Nutzungsrechte für den internen Datenimport geprüft", key="import_rights")
-    import_format = st.selectbox("Importvertrag", ["Standard v1 CSV/JSON", "Recherche-CSV (vorgeschlagener Vertrag)"])
+    import_format = st.selectbox("Importvertrag", ["Standard v1 CSV/JSON", "Recherche-CSV (vorgeschlagener Vertrag)", "P0: historische deutsche Recherche-CSV"])
     uploaded = st.file_uploader("CSV (; getrennt) oder JSON · maximal 2 MiB", type=["csv", "json"])
-    if uploaded is not None and permitted:
+    p0_evidence = None
+    p0_confirmation = None
+    if import_format.startswith("P0:"):
+        st.caption("P0-Kernplattformen: RESTLOS, Hämmerle, Proventura, NetBid, Zoll-Auktion. Alle 21 Quellen bleiben erhalten.")
+        p0_evidence = st.file_uploader("P0-Evidenzregister (bereitgestellte CSV oder JSON, optional)", type=["csv", "json"], key="p0_evidence")
+        if st.checkbox("Nutzerbestätigung aus V04: Beträge dieser Recherche sind Zuschlagspreise", key="p0_hammer"):
+            p0_confirmation = "MASTER V04: Nutzer bestätigt Zuschlagspreise; keine unabhängige Plattformverifikation"
+        if uploaded is not None:
+            st.download_button("P0-Evidenzvorlage für diese CSV", json.dumps({"schema_version":1,"csv_sha256":hashlib.sha256(uploaded.getvalue()).hexdigest(),"entries":[]}, indent=2), "p0-evidence-template.json", "application/json")
+    if uploaded is not None and (permitted or import_format.startswith("P0:")):
         payload = uploaded.getvalue()
         try:
-            if import_format.startswith("Recherche"):
+            if import_format.startswith("P0:"):
+                batch = parse_p0_csv(payload, p0_evidence.getvalue() if p0_evidence else None, hammer_confirmation=p0_confirmation)
+                documented = sum(bool(row["evidence"] and row["evidence"]["rights_status"] == "documented") for row in batch.provenance)
+                st.info(f"P0: {documented} Zeilen mit deklariertem Rechtsbeleg. Prüfung des Belegs bleibt erforderlich; fehlende Evidenz sperrt Bewertungen.")
+            elif import_format.startswith("Recherche"):
                 batch = parse_research_csv(payload)
                 with st.expander("Unveränderte Recherchefelder und Preisarten"):
                     st.json(batch.provenance)
             else:
                 batch = parse_import(payload, uploaded.name.rsplit(".", 1)[-1].lower())
             st.success(f"{len(batch.listings)} Angebote · {batch.duplicates} Dubletten zusammengeführt")
-            digest = hashlib.sha256(payload).hexdigest()
+            digest = p0_import_digest(payload, p0_evidence.getvalue() if p0_evidence else None, p0_confirmation) if import_format.startswith("P0:") else hashlib.sha256(payload).hexdigest()
             if os.environ.get("SCANNER_DATABASE") and st.button("Geprüften Import dauerhaft speichern", key="persist_upload"):
                 ListingStore(os.environ["SCANNER_DATABASE"]).ingest(batch, os.environ.get("SCANNER_WORKSPACE", "internal"), digest)
                 st.success("Import atomar gespeichert; unten im Scanner-Speicher verfügbar.")

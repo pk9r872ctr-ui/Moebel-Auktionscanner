@@ -6,6 +6,13 @@ nicht nachgewiesen. Dafür ist ein getesteter Import echter, rechtmäßig vom
 Nutzer bereitgestellter JSON-/CSV-Daten implementiert. Demo bleibt getrennt.
 Keine Gebotsabgabe, kein Kauf, keine ERP-Änderung, kein Deployment.
 
+## P0-Echtdatenimport vorbereiten
+
+[Importweg, Evidenzvertrag, Tests und offene Abnahme](docs/P0-IMPORT-ACCEPTANCE.md).
+20 echte Recherchezeilen einschließlich Evidenzregister wurden technisch bis
+ins Dashboard verarbeitet und bleiben gesperrt. Für keine Zeile liegt ein
+ausreichender Rechtsbeleg vor: Die fachliche P0-Schwelle ist noch nicht erreicht.
+
 ## Auftrag 03: geprüfter Entwicklungsstand
 
 21 Atlasquellen im versionierten Register, Rechercheadapter mit Originaldaten,
