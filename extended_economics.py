@@ -121,3 +121,18 @@ def assess_extended(listing, assumptions, plan, review_confirmed=False, now=None
         "warnings": ["Konservatives Planungsszenario; keine belegte Marktbewertung oder Kaufanweisung.",
                      "Verkaufsdauer ist dokumentiert; Finanzierungskosten müssen ausdrücklich geplant sein."]})
     return result
+
+
+def risk_adjusted_assumptions(assumptions, price_uplift, demand_uplift, reference):
+    """Manual business hurdles, not measured probabilities or market estimates."""
+    from dataclasses import replace
+    for value in (price_uplift,demand_uplift):
+        if isinstance(value,bool) or not isinstance(value,(int,float)) or not isfinite(value) or not 0<=value<=.5:
+            raise ValueError('Preis-/Nachfragerisiko: ausdrücklicher Margenaufschlag 0–0,5 erforderlich')
+    if not isinstance(reference,str) or not reference.strip():
+        raise ValueError('Methode und Belege für Risikoaufschläge fehlen')
+    from scoring import _number
+    _number("target_margin",assumptions.target_margin,1)
+    target=max(.15,assumptions.target_margin)+price_uplift+demand_uplift
+    if target>=1:raise ValueError('Risikozielmarge muss kleiner als 100 % bleiben')
+    return replace(assumptions,target_margin=target)
