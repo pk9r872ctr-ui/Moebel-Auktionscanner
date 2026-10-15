@@ -73,6 +73,8 @@ class ListingStore:
                 old = db.execute("SELECT payload FROM listings WHERE workspace=? AND source=? AND source_id=?", args).fetchone()
                 if old:
                     previous = Listing.parse(json.loads(old[0]))
+                    if lot.terms_reference.startswith("P0:") and not previous.terms_reference.startswith("P0:"):
+                        raise ValidationError("P0-Recherche kollidiert mit vorhandenem Angebot; manuelle Prüfung erforderlich")
                     before, after = timestamp(previous.observed_at, "observed_at"), timestamp(lot.observed_at, "observed_at")
                     if before == after and previous != lot:
                         raise ValidationError("Widersprüchliche Dublette im Speicher")
@@ -118,6 +120,8 @@ class ListingStore:
                 raise ValidationError("Angebot nicht im Arbeitsbereich vorhanden")
             lot = Listing.parse(json.loads(row[0]))
             observed_at = timestamp(lot.observed_at, "observed_at").isoformat()
+            if decision == "candidate" and (lot.terms_reference.startswith("P0:") or self.p0_provenance(workspace, lot)):
+                raise ValidationError("Historische P0-Recherche ist kein Einkaufskandidat")
             if expected_observed_at is not None and timestamp(expected_observed_at, "expected_observed_at").isoformat() != observed_at:
                 raise ValidationError("Angebot seit Anzeige geändert; aktuellen Stand erneut prüfen")
             db.execute("INSERT OR REPLACE INTO decisions VALUES (?, ?, ?, ?, ?, ?)", (*keys, decision, note, observed_at))
@@ -144,7 +148,7 @@ class ListingStore:
         result = []
         for payload, approved_at in rows:
             lot = Listing.parse(json.loads(payload))
-            if timestamp(lot.observed_at, "observed_at").isoformat() == approved_at:
+            if timestamp(lot.observed_at, "observed_at").isoformat() == approved_at and not lot.terms_reference.startswith("P0:") and not self.p0_provenance(workspace, lot):
                 result.append(lot.to_dict())
         return tuple(result)
 
@@ -161,6 +165,12 @@ class ListingStore:
         with closing(self.connect()) as db:
             rows = db.execute("SELECT digest,payload FROM import_provenance WHERE workspace=? ORDER BY digest", (workspace,)).fetchall()
         return tuple(dict(digest=digest, provenance=json.loads(payload)) for digest, payload in rows)
+
+    def p0_provenance(self, workspace, lot):
+        """Read existing sidecars; no schema change or source fetch."""
+        return tuple(row for entry in self.export_provenance(workspace) for row in entry["provenance"]
+                     if row.get("p0_research") is True and row.get("source_key") == list(lot.key)
+                     and row.get("observed_at") == lot.observed_at)
 
     def record_scan(self, workspace, results):
         identifier(workspace, "workspace")

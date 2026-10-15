@@ -1,0 +1,38 @@
+{
+  "input_kind": "real_user_supplied_research",
+  "csv_sha256": "323840ae1967b6e36063ea114f873de685ae8e055668386974e4c1a4776d5877",
+  "evidence_sha256": "3806ee842b2074cb44ef060d8cf1df1ca89b99a40024b450f3cd1ad2e3d7ddd2",
+  "rows": 20,
+  "duplicates_in_file": 0,
+  "first_import": {
+    "skipped": false,
+    "inserted": 20,
+    "updated": 0,
+    "unchanged": 0
+  },
+  "repeat_import": {
+    "skipped": true,
+    "inserted": 0,
+    "updated": 0,
+    "unchanged": 0
+  },
+  "persisted_research_hints": 20,
+  "original_evidence_rows": 20,
+  "user_confirmed_hammer_prices": 20,
+  "documented_rights_records": 0,
+  "independently_documented_hammer_prices": 0,
+  "missing_source_times": 20,
+  "statuses": {
+    "ended": 17,
+    "unknown": 3
+  },
+  "blocked_assessments": 20,
+  "financial_values_unknown": true,
+  "purchase_candidates": 0,
+  "backup_restore_equal": true,
+  "dashboard_blocked_cards": 20,
+  "dashboard_verification": "Streamlit AppTest, existing private gate with synthetic authorized identity; no real Google login",
+  "ten_rights_documented_records_met": false,
+  "p0_legal_acceptance": "NOT_MET",
+  "elapsed_seconds": 1.250642314000288
+}
